@@ -1,0 +1,6 @@
+{
+  "name": "City Zoo",
+  "description": "Editorial Wildlife, Interactive Guide, and Fresh Botanical website for the city zoo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
