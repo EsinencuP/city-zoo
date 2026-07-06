@@ -52,15 +52,23 @@ export default function Footer({ lang }: FooterProps) {
             <div className="flex flex-col gap-2.5 text-sm text-[#F6F1E8]/70 font-mono">
               <span className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#6F8F5B]" />
-                <span className="tabular-nums">+373 [22] [12-34-56]</span>
+                <span className="tabular-nums">+373 22 56 27 22</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-[#6F8F5B]" />
+                <span className="tabular-nums">+373 689 44 244</span>
               </span>
               <span className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#6F8F5B]" />
-                <span>info@[cityzoo.org]</span>
+                <span>grzoo.info@gmail.com</span>
+              </span>
+              <span className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-[#6F8F5B]" />
+                <span>zooparkmd@gmail.com</span>
               </span>
               <span className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-[#6F8F5B]" />
-                <span>[ул. Лесная, 45]</span>
+                <span>MD-2072, bd. Dacia 50/7, Chișinău</span>
               </span>
             </div>
           </div>
@@ -75,16 +83,20 @@ export default function Footer({ lang }: FooterProps) {
             </p>
             <div className="flex gap-2.5 mt-1">
               <a 
-                href="#hero" 
+                href="https://www.facebook.com/gradinazoo/"
+                target="_blank"
+                rel="noreferrer"
                 className="bg-[#6F8F5B] hover:bg-[#4F6942] text-[#F6F1E8] text-xs font-semibold px-4 py-2 rounded-lg transition-all min-h-[36px] flex items-center justify-center shadow-sm"
               >
-                Volunteer
+                Facebook
               </a>
               <a 
-                href="#hero" 
+                href="https://zoo.md/"
+                target="_blank"
+                rel="noreferrer"
                 className="bg-[#D77A4A] hover:bg-[#c2673a] text-[#F6F1E8] text-xs font-semibold px-4 py-2 rounded-lg transition-all min-h-[36px] flex items-center justify-center shadow-sm"
               >
-                Donate
+                zoo.md
               </a>
             </div>
           </div>

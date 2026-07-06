@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Calendar, Ticket, Minus, Plus, CreditCard, Check } from "lucide-react";
+import { X, Ticket, Minus, Plus, Check, QrCode } from "lucide-react";
 
 interface TicketModalProps {
   isOpen: boolean;
@@ -8,63 +8,59 @@ interface TicketModalProps {
 }
 
 export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps) {
-  if (!isOpen) return null;
-
   const [quantities, setQuantities] = useState({
     adult: 1,
     child: 0,
     senior: 0
   });
+  const [step, setStep] = useState<"select" | "success">("select");
 
-  const [paymentStep, setPaymentStep] = useState<"select" | "success">("select");
+  if (!isOpen) return null;
 
   const prices = {
-    adult: 350,
-    child: 150,
-    senior: 200
+    adult: 120,
+    child: 60,
+    senior: 80
   };
 
   const labels = {
     ru: {
-      title: "Купить билет в зоопарк",
-      subtitle: "Бесконтактный QR-вход, действителен на выбранный день",
+      title: "Билеты в Zoo",
+      subtitle: "Демо-версия показывает выбор тарифов и QR-вход без реальной оплаты.",
       adult: "Взрослый билет",
-      child: "Детский билет (до 12 лет)",
-      senior: "Льготный (пенсионеры / студенты)",
-      total: "Итого к оплате",
-      cta: "Оплатить картой",
-      successTitle: "Оплата прошла успешно!",
-      successSubtitle: "Электронные билеты отправлены на ваш e-mail. Сохраните QR-коды для быстрого бесконтактного входа через главный турникет.",
+      child: "Детский билет до 12 лет",
+      senior: "Льготный билет",
+      total: "Итого",
+      successTitle: "Демо-заявка готова",
+      successSubtitle: "В рабочей версии здесь будет реальный билет с QR-кодом. Для демонстрации сценарий завершён без оплаты и отправки email.",
       close: "Закрыть",
-      checkout: "Перейти к оплате",
+      checkout: "Сформировать демо-заявку",
       currency: "MDL"
     },
     ro: {
-      title: "Cumpără bilet la Zoo",
-      subtitle: "Intrare rapidă cu QR, valabil pentru ziua selectată",
-      adult: "Bilet Adult",
-      child: "Bilet Copil (sub 12 ani)",
-      senior: "Bilet Redus (pensionari / studenți)",
-      total: "Total spre plată",
-      cta: "Plătește cu cardul",
-      successTitle: "Plată finalizată cu succes!",
-      successSubtitle: "Biletele electronice au fost trimise pe e-mail. Salvați codurile QR pentru acces rapid la turnichetul principal.",
+      title: "Bilete la Zoo",
+      subtitle: "Versiunea demo arată selectarea tarifelor și accesul QR fără plată reală.",
+      adult: "Bilet adult",
+      child: "Bilet copil până la 12 ani",
+      senior: "Bilet redus",
+      total: "Total",
+      successTitle: "Cererea demo este gata",
+      successSubtitle: "În versiunea completă aici va fi un bilet real cu cod QR. Pentru demo, scenariul se încheie fără plată și fără email.",
       close: "Închide",
-      checkout: "Spre plată",
+      checkout: "Generează cerere demo",
       currency: "MDL"
     },
     en: {
-      title: "Buy Zoo Tickets Online",
-      subtitle: "Contactless QR access pass, valid for the selected day",
-      adult: "Adult Ticket",
-      child: "Child Ticket (under 12)",
-      senior: "Reduced (Seniors / Students)",
-      total: "Total Cost",
-      cta: "Pay with Card",
-      successTitle: "Payment Successful!",
-      successSubtitle: "Your e-tickets have been dispatched to your email address. Keep the QR codes active to instantly bypass main gate turnstiles.",
+      title: "Tickets to Zoo",
+      subtitle: "This demo shows ticket selection and QR entry without real payment processing.",
+      adult: "Adult ticket",
+      child: "Child ticket under 12",
+      senior: "Reduced ticket",
+      total: "Total",
+      successTitle: "Demo request ready",
+      successSubtitle: "The full version will generate a real QR ticket here. In this demo, the flow ends without payment or email delivery.",
       close: "Close",
-      checkout: "Proceed to Payment",
+      checkout: "Create demo request",
       currency: "MDL"
     }
   }[lang];
@@ -77,23 +73,33 @@ export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps)
     });
   };
 
-  const totalCost = 
-    quantities.adult * prices.adult + 
-    quantities.child * prices.child + 
+  const totalCost =
+    quantities.adult * prices.adult +
+    quantities.child * prices.child +
     quantities.senior * prices.senior;
 
-  const handlePay = () => {
+  const handleCreateDemoRequest = () => {
     if (totalCost === 0) return;
-    setPaymentStep("success");
+    setStep("success");
   };
+
+  const handleClose = () => {
+    setStep("select");
+    onClose();
+  };
+
+  const ticketRows: Array<{ id: "adult" | "child" | "senior"; label: string; price: number }> = [
+    { id: "adult", label: labels.adult, price: prices.adult },
+    { id: "child", label: labels.child, price: prices.child },
+    { id: "senior", label: labels.senior, price: prices.senior }
+  ];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#233122]/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div 
+      <div
         className="bg-[#F6F1E8] w-full max-w-[450px] rounded-[32px] border border-[#233122]/10 overflow-hidden shadow-2xl flex flex-col justify-between p-6 animate-in slide-in-from-bottom-6 duration-300"
         id="ticketing-modal-container"
       >
-        {/* Header */}
         <div className="flex items-center justify-between border-b border-[#233122]/10 pb-4 mb-4">
           <div className="flex items-center gap-2">
             <Ticket className="w-5 h-5 text-[#D77A4A]" />
@@ -101,93 +107,49 @@ export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps)
               {labels.title}
             </h3>
           </div>
-          <button 
-            onClick={onClose}
-            className="w-8 h-8 rounded-full bg-[#E7F0E1] text-[#233122] hover:text-[#6F8F5B] flex items-center justify-center transition-colors min-w-[32px] min-h-[32px]"
+          <button
+            onClick={handleClose}
+            className="w-10 h-10 rounded-full bg-[#E7F0E1] text-[#233122] hover:text-[#6F8F5B] flex items-center justify-center transition-colors min-w-[40px] min-h-[40px]"
+            aria-label={labels.close}
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {paymentStep === "select" ? (
+        {step === "select" ? (
           <div className="flex flex-col gap-5">
             <p className="text-xs text-[#5E6B5C] leading-normal">
               {labels.subtitle}
             </p>
 
-            {/* Quantity counters */}
             <div className="flex flex-col gap-3">
-              {/* Adult */}
-              <div className="flex items-center justify-between bg-[#E7F0E1]/40 p-3 rounded-2xl border border-[#233122]/5">
-                <div>
-                  <h4 className="font-serif font-bold text-sm text-[#233122]">{labels.adult}</h4>
-                  <span className="font-mono text-xs text-[#6F8F5B] tabular-nums">{prices.adult} {labels.currency}</span>
+              {ticketRows.map((ticket) => (
+                <div key={ticket.id} className="flex items-center justify-between bg-[#E7F0E1]/40 p-3 rounded-2xl border border-[#233122]/5">
+                  <div>
+                    <h4 className="font-serif font-bold text-sm text-[#233122]">{ticket.label}</h4>
+                    <span className="font-mono text-xs text-[#6F8F5B] tabular-nums">{ticket.price} {labels.currency}</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => updateQuantity(ticket.id, "dec")}
+                      className="w-10 h-10 rounded-full bg-white hover:bg-[#E7F0E1] flex items-center justify-center text-[#233122] font-semibold transition-colors min-h-[40px] min-w-[40px]"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="font-mono text-sm font-bold w-6 text-center tabular-nums">{quantities[ticket.id]}</span>
+                    <button
+                      onClick={() => updateQuantity(ticket.id, "inc")}
+                      className="w-10 h-10 rounded-full bg-white hover:bg-[#E7F0E1] flex items-center justify-center text-[#233122] font-semibold transition-colors min-h-[40px] min-w-[40px]"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <button 
-                    onClick={() => updateQuantity("adult", "dec")}
-                    className="w-8 h-8 rounded-full bg-white hover:bg-[#E7F0E1] flex items-center justify-center text-[#233122] font-semibold transition-colors min-h-[32px] min-w-[32px]"
-                  >
-                    <Minus className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="font-mono text-sm font-bold w-6 text-center tabular-nums">{quantities.adult}</span>
-                  <button 
-                    onClick={() => updateQuantity("adult", "inc")}
-                    className="w-8 h-8 rounded-full bg-white hover:bg-[#E7F0E1] flex items-center justify-center text-[#233122] font-semibold transition-colors min-h-[32px] min-w-[32px]"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Child */}
-              <div className="flex items-center justify-between bg-[#E7F0E1]/40 p-3 rounded-2xl border border-[#233122]/5">
-                <div>
-                  <h4 className="font-serif font-bold text-sm text-[#233122]">{labels.child}</h4>
-                  <span className="font-mono text-xs text-[#6F8F5B] tabular-nums">{prices.child} {labels.currency}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button 
-                    onClick={() => updateQuantity("child", "dec")}
-                    className="w-8 h-8 rounded-full bg-white hover:bg-[#E7F0E1] flex items-center justify-center text-[#233122] font-semibold transition-colors min-h-[32px] min-w-[32px]"
-                  >
-                    <Minus className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="font-mono text-sm font-bold w-6 text-center tabular-nums">{quantities.child}</span>
-                  <button 
-                    onClick={() => updateQuantity("child", "inc")}
-                    className="w-8 h-8 rounded-full bg-white hover:bg-[#E7F0E1] flex items-center justify-center text-[#233122] font-semibold transition-colors min-h-[32px] min-w-[32px]"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Senior */}
-              <div className="flex items-center justify-between bg-[#E7F0E1]/40 p-3 rounded-2xl border border-[#233122]/5">
-                <div>
-                  <h4 className="font-serif font-bold text-sm text-[#233122]">{labels.senior}</h4>
-                  <span className="font-mono text-xs text-[#6F8F5B] tabular-nums">{prices.senior} {labels.currency}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <button 
-                    onClick={() => updateQuantity("senior", "dec")}
-                    className="w-8 h-8 rounded-full bg-white hover:bg-[#E7F0E1] flex items-center justify-center text-[#233122] font-semibold transition-colors min-h-[32px] min-w-[32px]"
-                  >
-                    <Minus className="w-3.5 h-3.5" />
-                  </button>
-                  <span className="font-mono text-sm font-bold w-6 text-center tabular-nums">{quantities.senior}</span>
-                  <button 
-                    onClick={() => updateQuantity("senior", "inc")}
-                    className="w-8 h-8 rounded-full bg-white hover:bg-[#E7F0E1] flex items-center justify-center text-[#233122] font-semibold transition-colors min-h-[32px] min-w-[32px]"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
 
-            {/* Total */}
             <div className="border-t border-[#233122]/10 pt-4 flex items-center justify-between font-serif">
               <span className="font-bold text-base text-[#5E6B5C]">{labels.total}</span>
               <span className="font-bold text-2xl text-[#233122] tabular-nums">
@@ -195,17 +157,16 @@ export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps)
               </span>
             </div>
 
-            {/* Payment Button */}
             <button
-              onClick={handlePay}
+              onClick={handleCreateDemoRequest}
               disabled={totalCost === 0}
-              className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-md ${
-                totalCost > 0 
-                  ? "bg-[#D77A4A] hover:bg-[#c2673a] text-[#F6F1E8] active:scale-95" 
+              className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-[scale,background-color] duration-200 flex items-center justify-center gap-2 shadow-md ${
+                totalCost > 0
+                  ? "bg-[#D77A4A] hover:bg-[#c2673a] text-[#F6F1E8] active:scale-[0.96]"
                   : "bg-[#233122]/10 text-[#5E6B5C] cursor-not-allowed"
               }`}
             >
-              <CreditCard className="w-4 h-4" />
+              <QrCode className="w-4 h-4" />
               <span>{labels.checkout}</span>
             </button>
           </div>
@@ -221,14 +182,13 @@ export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps)
               {labels.successSubtitle}
             </p>
             <button
-              onClick={onClose}
-              className="mt-4 bg-[#233122] hover:bg-[#4F6942] text-[#F6F1E8] px-8 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 min-h-[40px]"
+              onClick={handleClose}
+              className="mt-4 bg-[#233122] hover:bg-[#4F6942] text-[#F6F1E8] px-8 py-2.5 rounded-xl font-semibold text-sm transition-[scale,background-color] duration-200 active:scale-[0.96] min-h-[40px]"
             >
               {labels.close}
             </button>
           </div>
         )}
-
       </div>
     </div>
   );

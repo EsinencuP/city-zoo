@@ -1,20 +1,31 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Zoo Demo
 
-# Run and deploy your AI Studio app
+Public demo of a multilingual Zoo visitor guide.
 
-This contains everything you need to run your app locally.
+Current scope is intentionally public-only. The admin panel, authentication, content CRUD, password reset, visual map editor, upload UI, QR export UI, publish/archive workflow, and all other backoffice features are deferred.
 
-View your app in AI Studio: https://ai.studio/apps/654e10fc-81d8-40ee-8859-13edddcd69d8
+## Implemented demo flows
 
-## Run Locally
+- Locale routes: `/ru`, `/ro`, `/en`
+- Animal directory: `/ru/animals`, `/ro/animals`, `/en/animals`
+- Animal detail pages: `/ru/animals/tiger`, `/ro/animals/tiger`, `/en/animals/tiger`
+- QR redirect route: `/qr/tiger`, `/qr/red_panda`, `/qr/snow_leopard`
+- Custom interactive map: `/ru/map`, `/ro/map`, `/en/map`
+- News/events list and detail pages
+- FAQ and visit planning page
+- Demo ticket request modal without real payment processing
 
-**Prerequisites:**  Node.js
+## Run locally
 
+```bash
+npm install
+npm run dev
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Open `http://localhost:3005/ru`.
+
+## Demo boundary
+
+This build is for a fast project demonstration. It uses local TypeScript data instead of PostgreSQL/Prisma runtime wiring so the public product can be shown quickly. The backend architecture remains documented in `BACKEND_SPECIFICATION.md`, but the current visible demo does not include the admin or database control surface.
+
+See `DEMO_SCOPE.md` for the exact deferred list.

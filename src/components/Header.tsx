@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import { TreePine, Menu, X, Ticket, HelpCircle } from "lucide-react";
+﻿import React, { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { TreePine, Menu, X, Ticket } from "lucide-react";
 import { translations } from "../data/translations";
+import Button from "./ui/Button";
+import { popupMotion } from "../lib/motion";
 
 interface HeaderProps {
   lang: "ru" | "ro" | "en";
@@ -20,12 +23,11 @@ export default function Header({ lang, setLang, onOpenTickets, onNavigate, curre
     { name: t.navMap, route: `/${lang}/map` },
     { name: t.navNews, route: `/${lang}/news` },
     { name: t.navFaq, route: `/${lang}/faq` },
-    { name: lang === "ru" ? "Визит" : lang === "ro" ? "Vizită" : "Visit", route: `/${lang}/visit` },
+    { name: lang === "ru" ? "Визит" : lang === "ro" ? "Vizită" : "Visit", route: `/${lang}/visit` }
   ];
 
   const handleLangChange = (newLang: "ru" | "ro" | "en") => {
     setLang(newLang);
-    // Replace the current route's language segment if it has one
     const segments = currentRoute.split("/");
     if (segments[1] === "ru" || segments[1] === "ro" || segments[1] === "en") {
       segments[1] = newLang;
@@ -37,59 +39,52 @@ export default function Header({ lang, setLang, onOpenTickets, onNavigate, curre
 
   const isActive = (route: string) => {
     if (route === `/${lang}` && currentRoute === `/${lang}`) return true;
-    if (route !== `/${lang}` && currentRoute.startsWith(route)) return true;
-    return false;
+    return route !== `/${lang}` && currentRoute.startsWith(route);
+  };
+
+  const go = (route: string) => {
+    setMobileMenuOpen(false);
+    onNavigate(route);
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#F6F1E8]/90 backdrop-blur-md border-b border-[#233122]/10 transition-colors duration-300">
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
-        
-        {/* LOGO */}
-        <button 
-          onClick={() => onNavigate(`/${lang}`)}
-          className="flex items-center gap-2 group min-h-[40px] px-2 rounded-lg hover:bg-[#E7F0E1]/50 transition-colors"
+    <header className="sticky top-3 z-40 px-3 md:top-4">
+      <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between rounded-full bg-cream/84 px-3 shadow-soft-card backdrop-blur-xl md:px-4">
+        <button
+          onClick={() => go(`/${lang}`)}
+          className="flex min-h-11 items-center gap-2 rounded-full px-3 text-canopy transition-[background-color,transform] duration-200 hover:bg-mint/70 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-leaf/20"
         >
-          <TreePine className="w-6 h-6 text-[#6F8F5B] group-hover:scale-105 transition-transform duration-300" />
-          <span className="font-serif font-bold text-lg text-[#233122] tracking-tight">
-            {t.logo}
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-canopy text-mint">
+            <TreePine className="h-5 w-5" />
           </span>
+          <span className="font-serif text-xl font-semibold tracking-[-0.04em]">{t.logo}</span>
         </button>
 
-        {/* COMPACT NAVIGATION - DESKTOP */}
-        <nav className="hidden md:flex items-center gap-5">
+        <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
             <button
               key={item.route}
-              onClick={() => onNavigate(item.route)}
-              className={`text-sm font-medium transition-colors duration-200 py-2 min-h-[40px] flex items-center relative ${
-                isActive(item.route) 
-                  ? "text-[#233122] font-semibold" 
-                  : "text-[#5E6B5C] hover:text-[#233122]"
-              }`}
+              onClick={() => go(item.route)}
+              className={[
+                "relative min-h-10 rounded-full px-3.5 text-sm font-semibold transition-[background-color,color] duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-leaf/20",
+                isActive(item.route) ? "bg-mint text-canopy" : "text-moss hover:bg-mint/55 hover:text-canopy"
+              ].join(" ")}
             >
-              <span>{item.name}</span>
-              {isActive(item.route) && (
-                <span className="absolute bottom-1.5 left-0 right-0 h-0.5 bg-[#6F8F5B] rounded-full" />
-              )}
+              {item.name}
             </button>
           ))}
         </nav>
 
-        {/* RIGHT AREA: LANGS, CTA, MOBILE TRIGGER */}
-        <div className="flex items-center gap-3 md:gap-4">
-          
-          {/* LANGUAGE SELECTOR - ALWAYS VISIBLE */}
-          <div className="flex items-center border border-[#233122]/10 rounded-full p-0.5 bg-[#F6F1E8]" id="lang-selector">
+        <div className="flex items-center gap-2">
+          <div className="flex items-center rounded-full bg-mint/60 p-1" id="lang-selector">
             {(["ru", "ro", "en"] as const).map((l) => (
               <button
                 key={l}
                 onClick={() => handleLangChange(l)}
-                className={`text-xs font-semibold px-2.5 py-1.5 rounded-full uppercase transition-all duration-200 min-w-[32px] min-h-[32px] flex items-center justify-center ${
-                  lang === l
-                    ? "bg-[#6F8F5B] text-[#F6F1E8] shadow-sm"
-                    : "text-[#5E6B5C] hover:text-[#233122]"
-                }`}
+                className={[
+                  "flex min-h-8 min-w-8 items-center justify-center rounded-full px-2 text-xs font-bold uppercase transition-[background-color,color,transform] duration-200 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-leaf/20",
+                  lang === l ? "bg-canopy text-cream" : "text-moss hover:text-canopy"
+                ].join(" ")}
                 aria-label={`Switch language to ${l}`}
               >
                 {l}
@@ -97,62 +92,53 @@ export default function Header({ lang, setLang, onOpenTickets, onNavigate, curre
             ))}
           </div>
 
-          {/* DESKTOP CTA */}
-          <button
-            onClick={onOpenTickets}
-            className="hidden sm:flex items-center gap-2 bg-[#D77A4A] hover:bg-[#c2673a] text-[#F6F1E8] px-4 py-2 rounded-full font-medium text-sm transition-all duration-200 hover:scale-[0.98] active:scale-95 shadow-sm min-h-[40px]"
-            id="buy-ticket-header-cta"
-          >
-            <Ticket className="w-4 h-4" />
+          <Button onClick={onOpenTickets} className="hidden px-4 py-2 sm:flex" id="buy-ticket-header-cta">
+            <Ticket className="h-4 w-4" />
             <span>{t.ctaBuyTicket}</span>
-          </button>
+          </Button>
 
-          {/* MOBILE HAMBURGER TRIGGER */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-[#E7F0E1]/80 text-[#233122] transition-colors min-w-[40px] min-h-[40px] flex items-center justify-center"
-            aria-label="Toggle Navigation Menu"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-full bg-mint/70 text-canopy transition-[background-color,scale] duration-200 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-leaf/20 md:hidden"
+            aria-expanded={mobileMenuOpen}
+            aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-
         </div>
       </div>
 
-      {/* MOBILE NAV PANEL */}
-      {mobileMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-[#F6F1E8] border-b border-[#233122]/10 shadow-lg px-6 py-6 flex flex-col gap-5 animate-in fade-in slide-in-from-top-4 duration-200 z-50">
-          <div className="flex flex-col gap-4">
-            {navItems.map((item) => (
-              <button
-                key={item.route}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onNavigate(item.route);
-                }}
-                className={`text-base font-medium text-left border-b border-[#233122]/5 pb-2 transition-colors min-h-[40px] flex items-center justify-between ${
-                  isActive(item.route) ? "text-[#6F8F5B] font-semibold" : "text-[#233122]"
-                }`}
-              >
-                <span>{item.name}</span>
-                {isActive(item.route) && <span className="w-1.5 h-1.5 bg-[#6F8F5B] rounded-full" />}
-              </button>
-            ))}
-          </div>
-
-          {/* MOBILE ONLY PRIMARY CTA */}
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              onOpenTickets();
-            }}
-            className="flex items-center justify-center gap-2 bg-[#D77A4A] hover:bg-[#c2673a] text-[#F6F1E8] py-3 rounded-xl font-semibold transition-all duration-200 active:scale-95 shadow-sm w-full min-h-[44px]"
+      <AnimatePresence initial={false}>
+        {mobileMenuOpen && (
+          <motion.div
+            className="mx-auto mt-2 max-w-[1200px] overflow-hidden rounded-[30px] bg-cream/96 p-4 shadow-soft-card backdrop-blur-xl md:hidden"
+            initial={{ opacity: 0, height: 0, y: -8 }}
+            animate={{ opacity: 1, height: "auto", y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -8 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Ticket className="w-5 h-5" />
-            <span>{t.ctaBuyTicket}</span>
-          </button>
-        </div>
-      )}
+            <motion.div className="flex flex-col gap-2" initial="hidden" animate="visible" exit="exit" variants={popupMotion}>
+              {navItems.map((item) => (
+                <button
+                  key={item.route}
+                  onClick={() => go(item.route)}
+                  className={[
+                    "flex min-h-11 items-center justify-between rounded-2xl px-4 text-left text-base font-semibold transition-[background-color,color] duration-200",
+                    isActive(item.route) ? "bg-mint text-canopy" : "text-moss hover:bg-mint/55 hover:text-canopy"
+                  ].join(" ")}
+                >
+                  <span>{item.name}</span>
+                  {isActive(item.route) && <span className="h-2 w-2 rounded-full bg-terracotta" />}
+                </button>
+              ))}
+              <Button onClick={() => { setMobileMenuOpen(false); onOpenTickets(); }} className="mt-2 w-full rounded-2xl">
+                <Ticket className="h-5 w-5" />
+                <span>{t.ctaBuyTicket}</span>
+              </Button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

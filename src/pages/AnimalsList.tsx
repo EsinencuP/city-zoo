@@ -150,7 +150,7 @@ export default function AnimalsList({ lang, onSelectAnimal }: AnimalsListProps) 
           {lang === "ru" ? "Иллюстрированный Справочник Животных" : lang === "ro" ? "Ghidul Ilustrat al Animalelor" : "Illustrated Animal Sanctuary Directory"}
         </span>
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#233122]">
-          {lang === "ru" ? "Жители Зоопарка" : lang === "ro" ? "Locatarii Grădinii Zoologice" : "Fauna & Residents"}
+          {lang === "ru" ? "Жители Zoo" : lang === "ro" ? "Locatarii Zoo" : "Zoo Residents"}
         </h1>
         <p className="text-[#5E6B5C] text-sm sm:text-base mt-2 max-w-2xl">
           {lang === "ru" ? "Каждая карточка содержит полную информацию о виде, его привычках, статусе охраны и времени кормления." :

@@ -1,6 +1,11 @@
-import React from "react";
+﻿import React from "react";
+import { motion } from "motion/react";
 import { Leaf, Award, Heart } from "lucide-react";
 import { translations } from "../data/translations";
+import { staggerItem } from "../lib/motion";
+import SectionShell from "./ui/SectionShell";
+import StaggeredList from "./motion/StaggeredList";
+import OrganicShape from "./decorative/OrganicShape";
 
 interface TrustSectionProps {
   lang: "ru" | "ro" | "en";
@@ -8,82 +13,37 @@ interface TrustSectionProps {
 
 export default function TrustSection({ lang }: TrustSectionProps) {
   const t = translations[lang].trust;
-
   const stats = [
-    {
-      icon: Leaf,
-      number: t.stat1Number,
-      label: t.stat1Label
-    },
-    {
-      icon: Award,
-      number: t.stat2Number,
-      label: t.stat2Label
-    },
-    {
-      icon: Heart,
-      number: t.stat3Number,
-      label: t.stat3Label
-    }
+    { icon: Leaf, number: t.stat1Number, label: t.stat1Label },
+    { icon: Award, number: t.stat2Number, label: t.stat2Label },
+    { icon: Heart, number: t.stat3Number, label: t.stat3Label }
   ];
 
   return (
-    <section id="trust" className="py-20 bg-[#E7F0E1]/40 border-b border-[#233122]/10 overflow-hidden relative">
-      {/* Editorial Decorative Background Leaf Outline */}
-      <div className="absolute right-0 bottom-0 w-64 h-64 text-[#6F8F5B]/5 pointer-events-none select-none">
-        <svg viewBox="0 0 100 100" className="w-full h-full fill-current">
-          <path d="M10,90 Q40,40 90,10 Q60,60 10,90 Z" />
-        </svg>
-      </div>
-
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
-        {/* TEXT COLUMN - 7 cols on desktop */}
-        <div className="lg:col-span-7 flex flex-col items-start gap-6">
-          <span className="font-mono text-xs text-[#6F8F5B] uppercase tracking-wider block">Conservation Mission</span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#233122] font-semibold tracking-tight text-balance">
-            {t.title}
-          </h2>
-          <h3 className="font-serif text-xl text-[#6F8F5B] font-medium italic">
-            {t.subtitle}
-          </h3>
-          
-          <div className="flex flex-col gap-4 text-sm sm:text-base text-[#5E6B5C] leading-relaxed max-w-2xl text-pretty">
-            <p>{t.desc1}</p>
-            <p>{t.desc2}</p>
-          </div>
+    <SectionShell id="trust" tone="mint" eyebrow="Conservation mission" title={t.title} description={t.subtitle} className="relative overflow-hidden">
+      <OrganicShape className="-right-24 bottom-8 h-72 w-72 bg-leaf/10" />
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="max-w-2xl space-y-5 text-base leading-8 text-moss text-pretty">
+          <p>{t.desc1}</p>
+          <p>{t.desc2}</p>
         </div>
-
-        {/* STATS COLUMN - 5 cols on desktop */}
-        <div className="lg:col-span-5 flex flex-col gap-6 w-full">
-          {stats.map((stat, idx) => {
+        <StaggeredList className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1">
+          {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <div 
-                key={idx}
-                className="bg-[#F6F1E8] border border-[#233122]/5 p-5 sm:p-6 rounded-[24px] shadow-sm flex items-center gap-4 sm:gap-5"
-                id={`trust-stat-box-${idx}`}
-              >
-                {/* Icon wrapper */}
-                <div className="w-12 h-12 rounded-[16px] bg-[#E7F0E1] text-[#4F6942] flex items-center justify-center shrink-0">
-                  <Icon className="w-6 h-6" />
+              <motion.div key={stat.label} variants={staggerItem} whileHover={{ y: -3 }} className="flex items-center gap-5 rounded-[30px] bg-cream/88 p-5 shadow-soft-card transition-[box-shadow] duration-200 hover:shadow-soft-card-hover">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[20px] bg-mint text-leaf">
+                  <Icon className="h-6 w-6" />
                 </div>
-
-                {/* Number & Label */}
-                <div className="flex flex-col">
-                  <span className="font-serif font-bold text-3xl sm:text-4xl text-[#233122] leading-none tabular-nums tracking-tight">
-                    {stat.number}
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#5E6B5C] font-medium mt-1 leading-snug">
-                    {stat.label}
-                  </span>
+                <div>
+                  <span className="block font-serif text-4xl font-semibold leading-none tracking-[-0.05em] text-canopy tabular-nums">{stat.number}</span>
+                  <span className="mt-1 block text-sm leading-snug text-moss">{stat.label}</span>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
-
+        </StaggeredList>
       </div>
-    </section>
+    </SectionShell>
   );
 }

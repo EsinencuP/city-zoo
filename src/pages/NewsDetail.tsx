@@ -72,7 +72,7 @@ export default function NewsDetail({ newsId, onBack, lang }: NewsDetailProps) {
 
           <p>
             {lang === "ru" ? "Помните, что лучший способ поддержать зоопарк — это покупка электронных билетов онлайн, что позволяет избежать очередей у входа и делает ваш визит полностью бесконтактным." :
-             lang === "ro" ? "Amintiți-vă că cel mai bun mod de a sprijini grădina zoologică este achiziționarea biletelor online, ceea ce elimină complet cozile de la intrare." :
+             lang === "ro" ? "Amintiți-vă că cel mai bun mod de a sprijini Zoo este achiziționarea biletelor online, ceea ce elimină complet cozile de la intrare." :
              "Please consider that the absolute best way to back our botanical sanctuary's research is through acquiring digital online tickets, which completely avoids congestion at main gate turnstiles."}
           </p>
         </div>

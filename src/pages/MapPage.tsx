@@ -125,8 +125,8 @@ export default function MapPage({ lang, onSelectAnimal }: MapPageProps) {
   };
 
   const getMarkerStyles = (type: MapMarker["type"], isSelected: boolean) => {
-    const base = "absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full transition-all duration-300 shadow-md cursor-pointer select-none";
-    const size = isSelected ? "w-10 h-10 ring-4 ring-[#D77A4A] z-30 scale-110" : "w-8 h-8 hover:scale-110 z-20 hover:z-25";
+    const base = "map-marker absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full transition-[transform,box-shadow,background-color] duration-200 shadow-md cursor-pointer select-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-terracotta/25";
+    const size = isSelected ? "w-10 h-10 ring-4 ring-terracotta z-30 scale-110 is-active" : "w-8 h-8 hover:scale-110 z-20 hover:z-25";
 
     let colorClass = "";
     switch (type) {
@@ -168,7 +168,7 @@ export default function MapPage({ lang, onSelectAnimal }: MapPageProps) {
         <div className="lg:col-span-8 flex flex-col gap-4">
           <div 
             ref={mapContainerRef}
-            className="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-[#E7F0E1] border border-[#233122]/10 rounded-[32px] overflow-hidden cursor-grab active:cursor-grabbing select-none shadow-[inset_0_2px_10px_rgba(35,49,34,0.05)]"
+            className="relative w-full aspect-[4/3] sm:aspect-[16/10] botanical-map-grid bg-mint border border-canopy/10 rounded-[36px] overflow-hidden cursor-grab active:cursor-grabbing select-none shadow-[inset_0_2px_10px_rgba(35,49,34,0.05)]"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
@@ -219,9 +219,9 @@ export default function MapPage({ lang, onSelectAnimal }: MapPageProps) {
 
         {/* DETAILS SIDE PANEL */}
         <div className="lg:col-span-4 h-full flex flex-col justify-between">
-          <div className="bg-[#E7F0E1] border border-[#233122]/10 rounded-[32px] p-6 shadow-sm min-h-[280px] lg:min-h-[380px] flex flex-col justify-between">
+          <div className="bg-cream/90 border border-canopy/10 rounded-[32px] p-6 shadow-soft-card min-h-[280px] lg:min-h-[380px] flex flex-col justify-between backdrop-blur-sm">
             {activeMarker ? (
-              <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+              <div className="popup-motion flex flex-col gap-4">
                 <span className="font-mono text-xs text-[#6F8F5B] uppercase tracking-wider block">
                   {activeMarker.type === "animal" ? t.legendAnimal : activeMarker.type}
                 </span>
@@ -246,7 +246,7 @@ export default function MapPage({ lang, onSelectAnimal }: MapPageProps) {
                         <p className="text-sm text-[#233122] leading-relaxed">{animalData.shortFact[lang]}</p>
                         <button
                           onClick={() => onSelectAnimal(animalData)}
-                          className="mt-4 bg-[#D77A4A] hover:bg-[#c2673a] text-[#F6F1E8] px-6 py-3 rounded-[16px] font-semibold text-sm transition-all duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-md hover:scale-[0.98] min-h-[44px]"
+                          className="mt-4 bg-terracotta hover:bg-terracotta-deep text-cream px-6 py-3 rounded-[16px] font-semibold text-sm transition-all duration-200 active:scale-[0.96] flex items-center justify-center gap-2 shadow-md hover:scale-[0.98] min-h-[44px]"
                         >
                           <Eye className="w-4 h-4" />
                           <span>{t.viewInDetail}</span>

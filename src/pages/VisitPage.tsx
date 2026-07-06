@@ -10,16 +10,16 @@ export default function VisitPage({ lang, onOpenTickets }: VisitPageProps) {
   const content = {
     ru: {
       title: "Спланируйте свой визит",
-      subtitle: "Вся необходимая информация для комфортного и безопасного отдыха в Ботаническом саду и Зоопарке",
+      subtitle: "Вся необходимая информация для комфортного и безопасного визита в Zoo",
       hoursTitle: "Часы работы",
-      hoursDesc: "Открыто ежедневно, включая праздничные дни",
-      hoursWinter: "Зимний период (Октябрь - Апрель): 09:00 — 17:00",
-      hoursSummer: "Летний период (Май - Сентябрь): 08:00 — 20:00",
+      hoursDesc: "Открыто со вторника по воскресенье. Понедельник — санитарный день",
+      hoursWinter: "Понедельник: санитарный день, Zoo закрыт для посетителей",
+      hoursSummer: "Вторник — воскресенье: 09:00 — 20:00",
       addressTitle: "Адрес и местоположение",
-      addressDesc: "Кишиневский зоопарк расположен на зеленой окраине города, по адресу: бульвар Дачия, 50/7. До нас легко добраться как на общественном транспорте, так и на личном автомобиле.",
+      addressDesc: "Zoo расположен в секторе Ботаника по адресу: MD-2072, мун. Кишинёв, bd. Dacia 50/7. Официальные контакты: +373 22 56 27 22, +373 689 44 244, grzoo.info@gmail.com, zooparkmd@gmail.com.",
       transportTitle: "Как добраться",
       tBus: "Троллейбус № 4, Автобус № 19 (остановка «Ворота города», затем 10 минут пешком)",
-      tCar: "По бульвару Дачия в сторону аэропорта, съезд направо по указателю «Зоопарк». Есть просторная бесплатная парковка.",
+      tCar: "По bd. Dacia в сторону аэропорта, затем следуйте указателю «Zoo». Наличие парковочных мест лучше уточнить перед визитом по телефону.",
       rulesTitle: "Правила посещения",
       rule1: "Не кормите животных дикими продуктами. У них строгий, верифицированный научный рацион.",
       rule2: "Не заходите за ограждения вольеров ради вашей личной безопасности.",
@@ -28,13 +28,13 @@ export default function VisitPage({ lang, onOpenTickets }: VisitPageProps) {
     },
     ro: {
       title: "Planifică-ți vizita",
-      subtitle: "Toate informațiile necesare pentru o odihnă confortabilă și sigură în Grădina Botanică și Zoologică",
+      subtitle: "Toate informațiile necesare pentru o vizită confortabilă și sigură la Zoo",
       hoursTitle: "Program de lucru",
-      hoursDesc: "Deschis zilnic, inclusiv în zilele de sărbătoare",
-      hoursWinter: "Perioada de iarnă (Octombrie - Aprilie): 09:00 — 17:00",
-      hoursSummer: "Perioada de vară (Mai - Septembrie): 08:00 — 20:00",
+      hoursDesc: "Deschis de marți până duminică. Luni este zi sanitară",
+      hoursWinter: "Luni: zi sanitară, Zoo este închis pentru vizitatori",
+      hoursSummer: "Marți — duminică: 09:00 — 20:00",
       addressTitle: "Adresă și locație",
-      addressDesc: "Grădina Zoologică din Chișinău este situată în zona verde a orașului, pe adresa: Bd. Dacia, 50/7. Este ușor de ajuns atât cu transportul public, cât și cu mașina personală.",
+      addressDesc: "Zoo este situat în sectorul Botanica, la adresa: MD-2072, mun. Chișinău, bd. Dacia 50/7. Contacte oficiale: +373 22 56 27 22, +373 689 44 244, grzoo.info@gmail.com, zooparkmd@gmail.com.",
       transportTitle: "Cum ajungi la noi",
       tBus: "Troleibuzul nr. 4, Autobuzul nr. 19 (stația „Porțile Orașului”, urmată de o plimbare de 10 minute)",
       tCar: "Pe bulevardul Dacia spre aeroport, virați la dreapta conform indicatorului „Zoo”. Există parcare gratuită.",
@@ -46,13 +46,13 @@ export default function VisitPage({ lang, onOpenTickets }: VisitPageProps) {
     },
     en: {
       title: "Plan Your Visit",
-      subtitle: "All the essential details for a peaceful, refreshing, and safe day out in our Botanical & Wildlife Sanctuary",
+      subtitle: "All essential details for a comfortable and safe visit to Zoo",
       hoursTitle: "Opening Hours",
-      hoursDesc: "Open daily, including all public and seasonal holidays",
-      hoursWinter: "Winter season (October - April): 09:00 AM — 05:00 PM",
-      hoursSummer: "Summer season (May - September): 08:00 AM — 08:00 PM",
+      hoursDesc: "Open Tuesday to Sunday. Monday is a sanitary day",
+      hoursWinter: "Monday: sanitary day, Zoo is closed to visitors",
+      hoursSummer: "Tuesday — Sunday: 09:00 AM — 08:00 PM",
       addressTitle: "Address & Location",
-      addressDesc: "Chisinau Zoo is nested in the scenic edge of the city at 50/7 Dacia Boulevard. Seamlessly reachable via both public transit and private vehicles.",
+      addressDesc: "Zoo is located in the Botanica sector at MD-2072, 50/7 Dacia Blvd, Chișinău. Official contacts: +373 22 56 27 22, +373 689 44 244, grzoo.info@gmail.com, zooparkmd@gmail.com.",
       transportTitle: "How to Get Here",
       tBus: "Trolleybus No. 4, Bus No. 19 (Exit at 'City Gates' station, followed by a 10-minute scenic walk)",
       tCar: "Drive along Dacia Boulevard towards the airport, then follow the sign 'Zoo' to the right. Spacious free parking space is available.",
@@ -69,7 +69,7 @@ export default function VisitPage({ lang, onOpenTickets }: VisitPageProps) {
       
       {/* Title block */}
       <div className="text-center md:text-left mb-10 border-b border-[#233122]/10 pb-6">
-        <span className="font-mono text-xs text-[#6F8F5B] uppercase tracking-widest block mb-2">Visitor Guide</span>
+        <span className="font-mono text-xs text-[#6F8F5B] uppercase tracking-widest block mb-2">Zoo Visitor Guide</span>
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#233122]">
           {content.title}
         </h1>

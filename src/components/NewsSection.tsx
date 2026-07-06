@@ -1,6 +1,10 @@
-import React from "react";
+﻿import React from "react";
+import { motion } from "motion/react";
 import { Calendar, Tag, ArrowRight } from "lucide-react";
 import { translations } from "../data/translations";
+import { staggerItem } from "../lib/motion";
+import SectionShell from "./ui/SectionShell";
+import StaggeredList from "./motion/StaggeredList";
 
 interface NewsSectionProps {
   lang: "ru" | "ro" | "en";
@@ -11,74 +15,56 @@ export default function NewsSection({ lang, onNavigate }: NewsSectionProps) {
   const t = translations[lang].news;
 
   return (
-    <section id="news" className="py-20 bg-[#F6F1E8] border-b border-[#233122]/10">
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6">
-        
-        {/* Section Header */}
-        <div className="max-w-2xl mb-12">
-          <span className="font-mono text-xs text-[#6F8F5B] uppercase tracking-wider block mb-2">Sanctuary Logs</span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#233122] font-semibold tracking-tight">
-            {t.title}
-          </h2>
-          <p className="text-sm sm:text-base text-[#5E6B5C] mt-2 text-pretty">
-            {t.subtitle}
-          </p>
-        </div>
-
-        {/* 3-Column Responsive Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {t.items.map((newsItem, idx) => {
-            return (
-              <div 
-                key={idx}
-                className="bg-[#E7F0E1]/40 border border-[#233122]/5 rounded-[24px] p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between items-start gap-6"
-                id={`news-card-item-${idx}`}
-              >
-                <div className="flex flex-col gap-3">
-                  
-                  {/* Meta: Date and Tag */}
-                  <div className="flex items-center gap-3 font-mono text-[10px] text-[#5E6B5C]">
-                    <div className="flex items-center gap-1 bg-[#F6F1E8] px-2.5 py-1 rounded-md border border-[#233122]/5">
-                      <Calendar className="w-3 h-3 text-[#6F8F5B]" />
-                      <span className="tabular-nums">{newsItem.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1 bg-[#6F8F5B]/10 text-[#4F6942] px-2.5 py-1 rounded-md">
-                      <Tag className="w-3 h-3" />
-                      <span>{newsItem.tag}</span>
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 
-                    onClick={() => onNavigate(`/${lang}/news/${idx}`)}
-                    className="font-serif text-lg font-bold text-[#233122] leading-snug hover:text-[#6F8F5B] transition-colors cursor-pointer"
-                  >
+    <SectionShell
+      id="news"
+      tone="white"
+      eyebrow="Sanctuary logs"
+      title={t.title}
+      description={t.subtitle}
+      headerAlign="split"
+      className="border-y border-canopy/5"
+    >
+      <StaggeredList className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        {t.items.slice(0, 3).map((newsItem, idx) => (
+          <motion.article
+            key={newsItem.title}
+            variants={staggerItem}
+            whileHover={{ y: -4 }}
+            className={["group relative overflow-hidden rounded-[32px] p-6 shadow-soft-card transition-[box-shadow] duration-200 hover:shadow-soft-card-hover", idx === 0 ? "bg-canopy text-cream" : "bg-cream/88 text-canopy"].join(" ")}
+            id={`news-card-item-${idx}`}
+          >
+            <div className="absolute -right-16 -top-16 h-36 w-36 rounded-full bg-leaf/15 blur-2xl" />
+            <div className="relative flex min-h-[270px] flex-col justify-between gap-7">
+              <div>
+                <div className="flex flex-wrap items-center gap-2 font-mono text-[10px]">
+                  <span className={["inline-flex items-center gap-1 rounded-full px-2.5 py-1", idx === 0 ? "bg-cream/12 text-cream/78" : "bg-mint text-moss"].join(" ")}>
+                    <Calendar className="h-3 w-3 text-terracotta" />
+                    <span className="tabular-nums">{newsItem.date}</span>
+                  </span>
+                  <span className={["inline-flex items-center gap-1 rounded-full px-2.5 py-1", idx === 0 ? "bg-cream/12 text-cream/78" : "bg-leaf/10 text-leaf"].join(" ")}>
+                    <Tag className="h-3 w-3" />
+                    <span>{newsItem.tag}</span>
+                  </span>
+                </div>
+                <button onClick={() => onNavigate(`/${lang}/news/${idx}`)} className="mt-5 text-left">
+                  <h3 className="font-serif text-2xl font-semibold leading-[1.08] tracking-[-0.03em] text-balance transition-colors duration-200 group-hover:text-terracotta">
                     {newsItem.title}
                   </h3>
-
-                  {/* Description */}
-                  <p className="text-sm text-[#5E6B5C] leading-relaxed text-pretty">
-                    {newsItem.desc}
-                  </p>
-
-                </div>
-
-                {/* Read More Link */}
-                <button 
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#4F6942] hover:text-[#233122] group mt-2"
-                  onClick={() => onNavigate(`/${lang}/news/${idx}`)}
-                  id={`news-read-more-btn-${idx}`}
-                >
-                  <span>{t.readMore}</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </button>
-
+                <p className={["mt-4 text-sm leading-6 text-pretty", idx === 0 ? "text-cream/72" : "text-moss"].join(" ")}>{newsItem.desc}</p>
               </div>
-            );
-          })}
-        </div>
-
-      </div>
-    </section>
+              <button
+                className="inline-flex min-h-10 w-fit items-center gap-1.5 rounded-full px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-terracotta transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-mint/60 active:scale-[0.96]"
+                onClick={() => onNavigate(`/${lang}/news/${idx}`)}
+                id={`news-read-more-btn-${idx}`}
+              >
+                <span>{t.readMore}</span>
+                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+              </button>
+            </div>
+          </motion.article>
+        ))}
+      </StaggeredList>
+    </SectionShell>
   );
 }

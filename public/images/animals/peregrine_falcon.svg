@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Peregrine Falcon">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fbf4e8"/>
+      <stop offset="0.48" stop-color="#e4f0dd"/>
+      <stop offset="1" stop-color="#d8e5e8"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="72%" cy="18%" r="45%">
+      <stop offset="0" stop-color="#fff8e8" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#fff8e8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="26" stdDeviation="28" flood-color="#253721" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#sun)"/>
+  <g opacity="0.22" fill="none" stroke="#253721" stroke-width="3">
+    <path d="M72 690c94-170 132-326 114-468"/>
+    <path d="M1022 700c-86-150-116-284-90-402"/>
+  </g>
+  <g filter="url(#softShadow)">
+    
+    <path d="M0 640C150 520 260 618 390 502C520 386 650 460 785 372C910 292 1064 326 1200 238V800H0Z" fill="#789c61" opacity="0.28"/>
+    <path d="M0 702C202 620 366 708 518 606C708 478 838 600 1200 444V800H0Z" fill="#253721" opacity="0.22"/>
+    <path d="M146 168c55-66 121-99 199-96-7 104-70 173-189 205" fill="#789c61" opacity="0.18"/>
+    <path d="M946 118c82 18 132 65 151 142-94 16-166-22-216-113" fill="#e4f0dd" opacity="0.22"/><path d="M600 410C410 300 270 250 154 276c110 116 236 184 380 204M660 410c188-114 330-162 452-128-111 112-240 178-386 198" fill="#607b8d" opacity="0.72"/>
+    <ellipse cx="612" cy="443" rx="245" ry="126" fill="#607b8d"/>
+    <circle cx="780" cy="360" r="104" fill="#607b8d"/>
+    <path d="M690 395c46 58 127 58 176 0 0 76-176 76-176 0Z" fill="#d8e5e8" opacity="0.84"/>
+    <circle cx="746" cy="342" r="13" fill="#24343d"/>
+    <circle cx="814" cy="342" r="13" fill="#24343d"/>
+    <path d="M772 374h28l-14 18Z" fill="#24343d"/><rect x="438" y="532" width="48" height="128" rx="22" fill="#24343d" opacity="0.86"/><rect x="682" y="532" width="48" height="128" rx="22" fill="#24343d" opacity="0.86"/><path d="M600 410C410 300 270 250 154 276c110 116 236 184 380 204M660 410c188-114 330-162 452-128-111 112-240 178-386 198" fill="#607b8d" opacity="0.72"/>
+  </g>
+  <g transform="translate(72 84)">
+    <rect width="250" height="42" rx="21" fill="#253721" opacity="0.9"/>
+    <text x="22" y="28" fill="#fbf4e8" font-family="IBM Plex Sans, Arial" font-size="18" font-weight="700" letter-spacing="3">ZOO RESIDENT</text>
+  </g>
+  <text x="72" y="710" fill="#253721" font-family="Fraunces, Georgia, serif" font-size="64" font-weight="700" letter-spacing="-3">Peregrine Falcon</text>
+  <text x="76" y="750" fill="#5f715a" font-family="JetBrains Mono, monospace" font-size="18" font-weight="600" letter-spacing="3">EDITORIAL WILDLIFE GUIDE</text>
+</svg>

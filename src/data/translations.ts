@@ -107,7 +107,7 @@ export interface TranslationSet {
 export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
   ru: {
     header: {
-      logo: "Городской Зоопарк",
+      logo: "Zoo",
       navHome: "Главная",
       navMap: "Карта",
       navAnimals: "Животные",
@@ -121,11 +121,11 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
       ctaPrimary: "Купить билет",
       ctaSecondary: "Спланировать визит",
       hoursLabel: "Часы работы",
-      hoursValue: "[09:00 – 19:00]",
+      hoursValue: "[Вт–Вс 09:00–20:00]",
       addressLabel: "Адрес",
-      addressValue: "[ул. Лесная, 45]",
+      addressValue: "[bd. Dacia 50/7, Chișinău]",
       priceLabel: "Стоимость билета",
-      priceValue: "[от 350 MDL / 1500 RSD]"
+      priceValue: "[от 5 MDL]"
     },
     quickInfo: {
       sectionTitle: "Практическая информация",
@@ -215,7 +215,7 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
         },
         {
           q: "Где можно припарковаться и сколько это стоит?",
-          a: "Рядом с главным входом расположена круглосуточная охраняемая муниципальная парковка на [350 мест]. Стоимость парковки составляет [50 MDL / 200 RSD] в час. Для людей с инвалидностью парковочные места предоставляются бесплатно при наличии соответствующего знака на стекле."
+          a: "Рядом с главным входом доступна парковка для посетителей. Стоимость и наличие мест уточняйте перед визитом по телефону Zoo. Для людей с инвалидностью предусмотрены удобные места у входной зоны."
         }
       ]
     },
@@ -225,7 +225,7 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
       colContactTitle: "Контакты",
       colSupportTitle: "Поддержка",
       supportText: "Если у вас возникли вопросы или предложения, пишите нам на почту.",
-      copyright: "© 2026 Городской Зоопарк.",
+      copyright: "© 2026 Zoo.",
       allRightsReserved: "Все права защищены."
     },
     qrCard: {
@@ -240,7 +240,7 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
   },
   ro: {
     header: {
-      logo: "Grădina Zoologică",
+      logo: "Zoo",
       navHome: "Acasă",
       navMap: "Hartă",
       navAnimals: "Animale",
@@ -254,11 +254,11 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
       ctaPrimary: "Cumpără bilet",
       ctaSecondary: "Planifică vizita",
       hoursLabel: "Orele de lucru",
-      hoursValue: "[09:00 – 19:00]",
+      hoursValue: "[Marți–Duminică 09:00–20:00]",
       addressLabel: "Adresa",
-      addressValue: "[str. Pădurii, 45]",
+      addressValue: "[bd. Dacia 50/7, Chișinău]",
       priceLabel: "Prețul biletului",
-      priceValue: "[de la 350 MDL / 1500 RSD]"
+      priceValue: "[de la 5 MDL]"
     },
     quickInfo: {
       sectionTitle: "Informații practice",
@@ -348,7 +348,7 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
         },
         {
           q: "Unde pot parca și cât costă?",
-          a: "Lângă intrarea principală se află o parcare municipală păzită non-stop de [350 locuri]. Prețul este de [50 MDL / 200 RSD] pe oră. Persoanele cu dizabilități beneficiază de parcare gratuită."
+          a: "Lângă intrarea principală este disponibilă parcare pentru vizitatori. Prețul și disponibilitatea locurilor se confirmă înainte de vizită la telefonul Zoo. Pentru persoanele cu dizabilități sunt prevăzute locuri comode aproape de intrare."
         }
       ]
     },
@@ -358,7 +358,7 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
       colContactTitle: "Contacte",
       colSupportTitle: "Suport",
       supportText: "Dacă aveți întrebări sau sugestii, scrieți-ne pe adresa de e-mail.",
-      copyright: "© 2026 Grădina Zoologică.",
+      copyright: "© 2026 Zoo.",
       allRightsReserved: "Toate drepturile rezervate."
     },
     qrCard: {
@@ -373,7 +373,7 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
   },
   en: {
     header: {
-      logo: "City Zoo",
+      logo: "Zoo",
       navHome: "Home",
       navMap: "Map",
       navAnimals: "Animals",
@@ -387,11 +387,11 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
       ctaPrimary: "Buy Ticket",
       ctaSecondary: "Plan Your Visit",
       hoursLabel: "Opening Hours",
-      hoursValue: "[09:00 – 19:00]",
+      hoursValue: "[Tue–Sun 09:00–20:00]",
       addressLabel: "Address",
-      addressValue: "[45 Lesnaya St.]",
+      addressValue: "[50/7 Dacia Blvd, Chișinău]",
       priceLabel: "Ticket Price",
-      priceValue: "[from 350 MDL / 1500 RSD]"
+      priceValue: "[from 5 MDL]"
     },
     quickInfo: {
       sectionTitle: "Practical Information",
@@ -481,7 +481,7 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
         },
         {
           q: "Where can I park and what are the fees?",
-          a: "A 24-hour guarded municipal parking lot with [350 spaces] is located adjacent to the main gates. Rates are [50 MDL / 200 RSD] per hour. Dedicated spaces for visitors with disabilities are free of charge when a valid tag is displayed."
+          a: "Visitor parking is available near the main entrance. Current availability and fees should be confirmed with Zoo before arrival. Convenient spaces are planned close to the entrance for visitors with disabilities."
         }
       ]
     },
@@ -490,8 +490,8 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
       colNavTitle: "Navigation",
       colContactTitle: "Contacts",
       colSupportTitle: "Support Service",
-      supportText: "Should you have queries or structural proposals, reach out to our team via email.",
-      copyright: "© 2026 City Zoo Sanctuary.",
+      supportText: "For visit questions, use the official Zoo emails or phone numbers listed here.",
+      copyright: "© 2026 Zoo.",
       allRightsReserved: "All rights reserved."
     },
     qrCard: {
