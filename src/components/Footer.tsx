@@ -1,5 +1,5 @@
-import React from "react";
-import { TreePine, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+﻿import React from "react";
+import { TreePine, Mail, Phone, MapPin } from "lucide-react";
 import { translations } from "../data/translations";
 
 interface FooterProps {
@@ -109,12 +109,8 @@ export default function Footer({ lang }: FooterProps) {
             <span>{t.copyright}</span> <span className="font-mono">{t.allRightsReserved}</span>
           </div>
           <div className="flex items-center gap-5">
-            <a href="#hero" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#hero" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="https://ai.studio" target="_blank" rel="noreferrer" className="hover:text-white transition-colors inline-flex items-center gap-1">
-              <span>Google AI Studio</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
+            <a href="#hero" className="hover:text-white transition-colors">{lang === "ru" ? "Политика конфиденциальности" : lang === "ro" ? "Politica de confidențialitate" : "Privacy Policy"}</a>
+            <a href="#hero" className="hover:text-white transition-colors">{lang === "ru" ? "Правила посещения" : lang === "ro" ? "Reguli de vizitare" : "Visitor Rules"}</a>
           </div>
         </div>
 
@@ -122,3 +118,5 @@ export default function Footer({ lang }: FooterProps) {
     </footer>
   );
 }
+
+

@@ -1,4 +1,4 @@
-export interface TranslationSet {
+﻿export interface TranslationSet {
   header: {
     logo: string;
     navHome: string;
@@ -117,123 +117,123 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
     },
     hero: {
       title: "Природа в самом сердце города",
-      subtitle: "Современный природный парк и научный центр. Узнайте больше о дикой фауне через интерактивный гид и живое общение.",
+      subtitle: "Zoo в Кишинёве — живой ботанический маршрут, где крупные животные, прогулочные зоны и практичная карта собраны в одном visitor-guide.",
       ctaPrimary: "Купить билет",
       ctaSecondary: "Спланировать визит",
       hoursLabel: "Часы работы",
-      hoursValue: "[Вт–Вс 09:00–20:00]",
+      hoursValue: "Вт–Вс 09:00–20:00",
       addressLabel: "Адрес",
-      addressValue: "[bd. Dacia 50/7, Chișinău]",
-      priceLabel: "Стоимость билета",
-      priceValue: "[от 5 MDL]"
+      addressValue: "bd. Dacia 50/7, Chișinău",
+      priceLabel: "Билеты",
+      priceValue: "от 5 MDL"
     },
     quickInfo: {
-      sectionTitle: "Практическая информация",
-      card1Title: "Быстрый вход по QR",
-      card1Text: "Покупайте билет онлайн на сайте и проходите без очереди через турникеты с бесконтактным сканером.",
-      card2Title: "Аудиогид по парку",
-      card2Text: "Отсканируйте QR-код возле любого вольера, чтобы открыть карточку животного и запустить голосовое сопровождение.",
-      card3Title: "Природный ботанический сад",
-      card3Text: "Более 400 видов редких хвойных и лиственных растений поддерживают естественный микроклимат для наших обитателей.",
-      card4Title: "Семейный комфорт",
-      card4Text: "Удобные зоны отдыха, детские эко-площадки, комнаты матери и ребенка расположены на всей территории."
+      sectionTitle: "Практично перед прогулкой",
+      card1Title: "Билеты без суеты",
+      card1Text: "Оставьте заявку на билет заранее и начните визит с главного входа Zoo без лишней навигации.",
+      card2Title: "Карта под рукой",
+      card2Text: "Откройте схему Zoo, чтобы найти животных, вход, кафе, детскую зону и медпункт.",
+      card3Title: "Часы и ориентиры",
+      card3Text: "Парк работает со вторника по воскресенье. Понедельник — санитарный день.",
+      card4Title: "Семейный маршрут",
+      card4Text: "Короткие остановки, понятные карточки животных и зоны отдыха помогают спланировать прогулку с детьми."
     },
     mapSection: {
-      title: "Интерактивная карта парка",
-      subtitle: "Используйте кастомную схему для навигации. Кликните по маркеру, чтобы узнать подробности о жителе вольера или инфраструктурном объекте.",
+      title: "Интерактивная карта Zoo",
+      subtitle: "Ориентируйтесь по спокойной схеме: животные, вход, кафе, детская зона и медпункт доступны в один клик.",
       legendAnimal: "Животное",
-      legendEntry: "Вход / Выход",
-      legendCafe: "Кафе / Еда",
+      legendEntry: "Вход / выход",
+      legendCafe: "Кафе / еда",
       legendKids: "Детская зона",
       legendFirstAid: "Медпункт",
-      clickMarkerTip: "Выберите маркер на карте, чтобы открыть интерактивную мини-карточку.",
+      clickMarkerTip: "Выберите маркер на карте, чтобы открыть короткую карточку с полезной информацией.",
       resetZoom: "Сбросить масштаб",
-      viewInDetail: "Подробнее",
+      viewInDetail: "Открыть карточку",
       popupClose: "Закрыть",
-      interactiveGuideTip: "Используйте карту прямо на телефоне во время прогулки."
+      interactiveGuideTip: "Карта удобна для телефона во время прогулки по Zoo."
     },
     featuredAnimals: {
-      title: "Наши обитатели",
-      subtitle: "Познакомьтесь ближе с редкими видами. Каждая карточка — это документальное свидетельство уникальности дикой природы.",
+      title: "Жители Zoo",
+      subtitle: "Редкие и знакомые виды в формате editorial wildlife cards: фото, биом, короткий факт и быстрый переход в QR-карточку.",
       latNameLabel: "Латинское название",
-      biomeLabel: "Биом / Среда обитания",
-      ctaDetail: "Смотреть подробности",
+      biomeLabel: "Биом",
+      ctaDetail: "Открыть карточку",
       detailsTitle: "Карточка животного"
     },
     news: {
-      title: "События и объявления",
-      subtitle: "Свежие новости из жизни парка, расписание лекций и специальные эко-акции.",
+      title: "События и обновления",
+      subtitle: "Небольшие анонсы для посетителей: лекции, семейные активности и сезонные новости Zoo.",
       readMore: "Подробнее",
       items: [
         {
           date: "08 ИЮЛЯ 2026",
           tag: "Лекторий",
-          title: "Вечерние экскурсии с зоологом: тайны ночных хищников",
-          desc: "Уникальная возможность понаблюдать за поведением амурских тигров и снежных барсов в сумерках, когда они наиболее активны."
+          title: "Вечерняя прогулка с зоологом",
+          desc: "Короткий маршрут о том, как ведут себя крупные хищники в спокойные вечерние часы."
         },
         {
           date: "12 ИЮЛЯ 2026",
-          tag: "Событие",
-          title: "День защиты диких кошек: детские квесты и лекции",
-          desc: "Экологический праздник с познавательными станциями на территории ботанического сада. Вход для детей до 12 лет бесплатный."
+          tag: "Семьи",
+          title: "День диких кошек",
+          desc: "Познавательные станции для детей и родителей рядом с карточками тигра, рыси и леопарда."
         },
         {
           date: "15 ИЮЛЯ 2026",
           tag: "Наука",
-          title: "Программа восстановления популяции дальневосточного леопарда",
-          desc: "Наши специалисты подготовили отчёт об успешной адаптации молодых особей. Читайте подробности научной работы."
+          title: "Как Zoo заботится о редких видах",
+          desc: "Зоологи расскажут о рационе, среде обитания и спокойном наблюдении за животными."
         }
       ]
     },
     trust: {
-      title: "Забота о биоразнообразии",
-      subtitle: "Мы не просто демонстрируем дикую природу, мы сохраняем её.",
-      desc1: "Наш зоопарк спроектирован по принципу максимального воссоздания естественных экосистем. Мы отказались от тесных решёток в пользу просторных вольеров с ботаническим зонированием, ландшафтным рельефом и водоёмами.",
-      desc2: "Все животные получают индивидуальный рацион питания, ветеринарное обслуживание высшего уровня и бережное отношение. Мы активно участвуем в международных программах по сохранению редких и исчезающих видов.",
-      stat1Number: "45",
-      stat1Label: "гектаров природного ландшафта",
-      stat2Number: "120+",
-      stat2Label: "видов редких животных",
-      stat3Number: "850 тыс",
-      stat3Label: "посетителей ежегодно"
+      title: "Городской сад с живым характером",
+      subtitle: "Zoo — это не только прогулка, но и бережное отношение к животным, растениям и посетителям.",
+      desc1: "Маршруты, вольеры и зелёные зоны собраны так, чтобы посетитель быстро понял, куда идти, что смотреть и где сделать паузу.",
+      desc2: "Карточки животных, карта и практичная информация помогают провести визит спокойно: без перегруженного меню и лишних экранов.",
+      stat1Number: "09:00",
+      stat1Label: "начало работы со вторника по воскресенье",
+      stat2Number: "10+",
+      stat2Label: "животных в каталоге Zoo",
+      stat3Number: "3",
+      stat3Label: "языка интерфейса"
     },
     faq: {
-      title: "Часто задаваемые вопросы",
-      subtitle: "Всё, что нужно знать перед тем, как отправиться на прогулку.",
+      title: "Частые вопросы",
+      subtitle: "Коротко о правилах, билетах, доступности и подготовке к визиту.",
       items: [
         {
           q: "Можно ли кормить животных самостоятельно?",
-          a: "Категорически запрещено. У каждого животного есть строго сбалансированный рацион, составленный зоологами. Человеческая пища (особенно хлеб, чипсы и сладости) наносит непоправимый вред их пищеварению и может привести к летальному исходу. Для желающих принять участие проводятся открытые показательные кормления под присмотром специалистов."
+          a: "Нет. У каждого животного есть рацион, составленный специалистами. Еда посетителей может навредить здоровью животных."
         },
         {
-          q: "Как работают билеты, купленные онлайн?",
-          a: "Электронный билет содержит индивидуальный QR-код. Нет необходимости распечатывать его — просто откройте PDF-файл на экране вашего смартфона и приложите к сканеру на главном турникете. Билет действителен в течение всего выбранного дня."
+          q: "Как использовать билет с телефона?",
+          a: "Покажите электронный билет или предварительную заявку на входе. Сотрудник Zoo подскажет следующий шаг."
         },
         {
-          q: "Оборудован ли зоопарк для маломобильных граждан?",
-          a: "Да, вся территория спроектирована с учётом безбарьерной среды. Все дорожки имеют плавный наклон без резких перепадов высоты, у вольеров и смотровых площадок предусмотрены специальные пандусы. На кассах и информационных стойках вы можете бесплатно взять в аренду механическую кресло-коляску."
+          q: "Подходит ли Zoo для семей с детьми?",
+          a: "Да. В маршруте предусмотрены короткие остановки, детская зона, понятная карта и карточки животных, которые легко читать на телефоне."
         },
         {
-          q: "Где можно припарковаться и сколько это стоит?",
-          a: "Рядом с главным входом доступна парковка для посетителей. Стоимость и наличие мест уточняйте перед визитом по телефону Zoo. Для людей с инвалидностью предусмотрены удобные места у входной зоны."
+          q: "Где находится Zoo?",
+          a: "Zoo находится в Кишинёве по адресу bd. Dacia 50/7. Перед визитом проверьте часы работы и санитарные дни."
         }
       ]
     },
     footer: {
-      desc: "Современный ботанико-зоологический комплекс, призванный сохранять уникальные виды дикой природы и формировать бережное отношение к экологии.",
+      desc: "Zoo — городской ботанический visitor-guide в Кишинёве: животные, карта, практичная информация и спокойный маршрут для всей семьи.",
       colNavTitle: "Навигация",
       colContactTitle: "Контакты",
       colSupportTitle: "Поддержка",
-      supportText: "Если у вас возникли вопросы или предложения, пишите нам на почту.",
+      supportText: "Если у вас есть вопросы о визите, используйте официальные телефоны или email Zoo.",
       copyright: "© 2026 Zoo.",
       allRightsReserved: "Все права защищены."
     },
     qrCard: {
       close: "Закрыть",
       warningTitle: "Правила безопасности",
-      feedingTimeTitle: "Показательное кормление",
-      rangeTitle: "Регион обитания",
-      scannedTip: "Вы сканировали QR-код вольера. Сохраните эту карточку на время визита.",
+      feedingTimeTitle: "Кормление",
+      rangeTitle: "Ареал",
+      scannedTip: "QR-карточка открыта. Сохраните её на время прогулки по Zoo.",
       tabAbout: "Описание",
       tabHabitat: "Ареал и питание"
     }
@@ -250,125 +250,125 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
     },
     hero: {
       title: "Natura în inima orașului",
-      subtitle: "Un parc natural modern și centru științific. Aflați mai multe despre fauna sălbatică prin ghidul nostru interactiv.",
+      subtitle: "Zoo din Chișinău este un ghid botanic pentru vizitatori: animale, hartă practică și informații clare pentru o plimbare liniștită.",
       ctaPrimary: "Cumpără bilet",
       ctaSecondary: "Planifică vizita",
-      hoursLabel: "Orele de lucru",
-      hoursValue: "[Marți–Duminică 09:00–20:00]",
-      addressLabel: "Adresa",
-      addressValue: "[bd. Dacia 50/7, Chișinău]",
-      priceLabel: "Prețul biletului",
-      priceValue: "[de la 5 MDL]"
+      hoursLabel: "Program",
+      hoursValue: "Mar–Dum 09:00–20:00",
+      addressLabel: "Adresă",
+      addressValue: "bd. Dacia 50/7, Chișinău",
+      priceLabel: "Bilete",
+      priceValue: "de la 5 MDL"
     },
     quickInfo: {
-      sectionTitle: "Informații practice",
-      card1Title: "Acces rapid cu QR",
-      card1Text: "Cumpărați biletul online pe site și treceți fără rând la turnichete cu scaner contactless.",
-      card2Title: "Audioghid în parc",
-      card2Text: "Scanați codul QR de lângă orice incintă pentru a deschide fișa animalului și a porni ghidul audio.",
-      card3Title: "Grădină botanică naturală",
-      card3Text: "Peste 400 de specii de plante rare mențin un microclimat natural optim pentru locuitorii noștri.",
-      card4Title: "Confort pentru familie",
-      card4Text: "Zone de recreere confortabile, terenuri de joacă ecologice, camere pentru mamă și copil pe tot teritoriul."
+      sectionTitle: "Practic înainte de plimbare",
+      card1Title: "Bilete fără grabă",
+      card1Text: "Trimiteți o solicitare pentru bilet și începeți vizita de la intrarea principală Zoo.",
+      card2Title: "Harta la îndemână",
+      card2Text: "Deschideți schema Zoo pentru animale, intrare, cafenea, zona copiilor și punct medical.",
+      card3Title: "Program și repere",
+      card3Text: "Parcul este deschis de marți până duminică. Luni este zi sanitară.",
+      card4Title: "Traseu pentru familie",
+      card4Text: "Opriri scurte, fișe clare despre animale și zone de odihnă pentru o vizită comodă cu copiii."
     },
     mapSection: {
-      title: "Harta interactivă a parcului",
-      subtitle: "Utilizați harta personalizată pentru navigare. Faceți clic pe un marker pentru a afla detalii despre animal sau facilități.",
+      title: "Harta interactivă Zoo",
+      subtitle: "Orientați-vă pe o schemă calmă: animale, intrare, cafenea, zona copiilor și punct medical sunt la un clic distanță.",
       legendAnimal: "Animal",
-      legendEntry: "Intrare / Ieșire",
-      legendCafe: "Cafenea / Mâncare",
-      legendKids: "Zonă Copii",
-      legendFirstAid: "Punct Medical",
-      clickMarkerTip: "Selectați un marker de pe hartă pentru a deschide o mini-fișă interactivă.",
+      legendEntry: "Intrare / ieșire",
+      legendCafe: "Cafenea / mâncare",
+      legendKids: "Zona copiilor",
+      legendFirstAid: "Punct medical",
+      clickMarkerTip: "Alegeți un marker de pe hartă pentru a deschide o fișă scurtă cu informații utile.",
       resetZoom: "Resetează zoom",
-      viewInDetail: "Detalii",
+      viewInDetail: "Deschide fișa",
       popupClose: "Închide",
-      interactiveGuideTip: "Folosiți harta direct pe telefon în timpul plimbării."
+      interactiveGuideTip: "Harta este comodă pe telefon în timpul plimbării prin Zoo."
     },
     featuredAnimals: {
-      title: "Locuitorii noștri",
-      subtitle: "Cunoașteți mai îndeaproape speciile rare. Fiecare fișă este o dovadă documentară a unicității faunei sălbatice.",
-      latNameLabel: "Denumirea latină",
-      biomeLabel: "Biom / Habitat",
-      ctaDetail: "Vezi detalii",
+      title: "Locuitorii Zoo",
+      subtitle: "Specii rare și cunoscute prezentate ca editorial wildlife cards: fotografie, biom, fapt scurt și acces rapid la fișa QR.",
+      latNameLabel: "Denumire latină",
+      biomeLabel: "Biom",
+      ctaDetail: "Deschide fișa",
       detailsTitle: "Fișa animalului"
     },
     news: {
-      title: "Evenimente și anunțuri",
-      subtitle: "Noutăți din viața parcului, programul prelegerilor și campanii ecologice speciale.",
-      readMore: "Citește mai mult",
+      title: "Evenimente și noutăți",
+      subtitle: "Anunțuri scurte pentru vizitatori: lecții, activități de familie și știri sezoniere Zoo.",
+      readMore: "Detalii",
       items: [
         {
           date: "08 IULIE 2026",
-          tag: "Prelegeri",
-          title: "Tururi de seară cu zoologul: secretele prădătorilor nocturni",
-          desc: "O oportunitate unică de a observa comportamentul tigrilor siberieni și al leoparzilor zăpezilor la amurg, când sunt cei mai activi."
+          tag: "Lecție",
+          title: "Plimbare de seară cu zoologul",
+          desc: "Un traseu scurt despre comportamentul prădătorilor mari în orele liniștite de seară."
         },
         {
           date: "12 IULIE 2026",
-          tag: "Eveniment",
-          title: "Ziua felinelor sălbatice: quest-uri și ateliere",
-          desc: "Sărbătoare ecologică în grădina botanică cu stații educative. Intrarea liberă pentru copiii sub 12 ani."
+          tag: "Familii",
+          title: "Ziua felinelor sălbatice",
+          desc: "Stații educative pentru copii și părinți lângă fișele tigrului, râsului și leopardului."
         },
         {
           date: "15 IULIE 2026",
           tag: "Știință",
-          title: "Programul de refacere a populației leopardului de Amur",
-          desc: "Specialiștii noștri au pregătit un raport despre adaptarea reușită a tinerelor exemplare în habitatele protejate."
+          title: "Cum are grijă Zoo de speciile rare",
+          desc: "Zoologii vor explica dieta, habitatul și observarea calmă a animalelor."
         }
       ]
     },
     trust: {
-      title: "Protejarea biodiversității",
-      subtitle: "Nu doar prezentăm natura sălbatică, o salvăm.",
-      desc1: "Grădina noastră este proiectată pentru a recrea la maximum ecosistemele naturale. Am renunțat la cuștile înguste în favoarea unor incinte spațioase cu zonare botanică și relief natural.",
-      desc2: "Toate animalele beneficiază de o dietă individuală, îngrijire medicală de nivel înalt și atitudine respectuoasă. Participăm activ în programe internaționale de conservare.",
-      stat1Number: "45",
-      stat1Label: "hectare de peisaj natural",
-      stat2Number: "120+",
-      stat2Label: "specii de animale rare",
-      stat3Number: "850 mii",
-      stat3Label: "vizitatori anual"
+      title: "Grădină urbană cu caracter viu",
+      subtitle: "Zoo înseamnă plimbare, grijă pentru animale, plante și vizitatori.",
+      desc1: "Traseele, incintele și zonele verzi sunt organizate astfel încât vizitatorul să înțeleagă rapid unde merge și ce poate vedea.",
+      desc2: "Fișele animalelor, harta și informațiile practice ajută la o vizită liniștită, fără meniuri încărcate.",
+      stat1Number: "09:00",
+      stat1Label: "deschidere de marți până duminică",
+      stat2Number: "10+",
+      stat2Label: "animale în catalogul Zoo",
+      stat3Number: "3",
+      stat3Label: "limbi de interfață"
     },
     faq: {
       title: "Întrebări frecvente",
-      subtitle: "Tot ce trebuie să știți înainte de a porni la plimbare.",
+      subtitle: "Pe scurt despre reguli, bilete, accesibilitate și pregătirea vizitei.",
       items: [
         {
-          q: "Este permisă hrănirea animalelor de către vizitatori?",
-          a: "Este strict interzis. Fiecare animal are o dietă echilibrată elaborată de zoologi. Hrana umană le dăunează grav digestia și poate duce la deces. Pentru cei interesați, organizăm hrăniri demonstrative ghidate de specialiști."
+          q: "Pot hrăni animalele singur?",
+          a: "Nu. Fiecare animal are o dietă pregătită de specialiști. Mâncarea vizitatorilor poate afecta sănătatea animalelor."
         },
         {
-          q: "Cum funcționează biletele cumpărate online?",
-          a: "Biletul electronic conține un cod QR unic. Nu este nevoie să-l imprimați — doar deschideți fișierul PDF pe ecranul telefonului și aplicați-l la scanerul de la turnichet. Biletul este valabil pe parcursul întregii zile selectate."
+          q: "Cum folosesc biletul de pe telefon?",
+          a: "Prezentați biletul electronic sau cererea preliminară la intrare. Echipa Zoo vă va indica următorul pas."
         },
         {
-          q: "Este grădina zoologică accesibilă persoanelor cu dizabilități?",
-          a: "Da, întregul teritoriu este proiectat fără bariere. Aleile au pante line fără denivelări bruște, iar la incinte sunt prevăzute rampe speciale. La info-desk puteți împrumuta gratuit un scaun cu rotile manual."
+          q: "Zoo este potrivit pentru familii cu copii?",
+          a: "Da. Traseul include opriri scurte, zonă pentru copii, hartă clară și fișe despre animale ușor de citit pe telefon."
         },
         {
-          q: "Unde pot parca și cât costă?",
-          a: "Lângă intrarea principală este disponibilă parcare pentru vizitatori. Prețul și disponibilitatea locurilor se confirmă înainte de vizită la telefonul Zoo. Pentru persoanele cu dizabilități sunt prevăzute locuri comode aproape de intrare."
+          q: "Unde se află Zoo?",
+          a: "Zoo se află în Chișinău, bd. Dacia 50/7. Verificați programul și zilele sanitare înainte de vizită."
         }
       ]
     },
     footer: {
-      desc: "Un complex modern botanic și zoologic, dedicat conservării speciilor rare de faună sălbatică și educării respectului față de ecologie.",
+      desc: "Zoo este un visitor-guide botanic urban în Chișinău: animale, hartă, informații practice și traseu calm pentru familie.",
       colNavTitle: "Navigare",
       colContactTitle: "Contacte",
       colSupportTitle: "Suport",
-      supportText: "Dacă aveți întrebări sau sugestii, scrieți-ne pe adresa de e-mail.",
+      supportText: "Pentru întrebări despre vizită, folosiți telefoanele sau emailurile oficiale Zoo.",
       copyright: "© 2026 Zoo.",
       allRightsReserved: "Toate drepturile rezervate."
     },
     qrCard: {
       close: "Închide",
-      warningTitle: "Reguli de securitate",
-      feedingTimeTitle: "Hrănire demonstrativă",
-      rangeTitle: "Regiunea de origine",
-      scannedTip: "Ați scanat codul QR al incintei. Salvați această fișă pe parcursul vizitei.",
+      warningTitle: "Reguli de siguranță",
+      feedingTimeTitle: "Hrănire",
+      rangeTitle: "Areal",
+      scannedTip: "Fișa QR este deschisă. Păstrați-o în timpul plimbării prin Zoo.",
       tabAbout: "Descriere",
-      tabHabitat: "Habitat și dietă"
+      tabHabitat: "Areal și hrană"
     }
   },
   en: {
@@ -383,125 +383,126 @@ export const translations: Record<"ru" | "ro" | "en", TranslationSet> = {
     },
     hero: {
       title: "Nature in the Heart of the City",
-      subtitle: "A modern natural sanctuary and botanical center. Discover wild fauna through our interactive guide and pristine enclosures.",
+      subtitle: "Zoo in Chisinau is a botanical visitor guide: animals, a practical map, and clear information for a calm city walk.",
       ctaPrimary: "Buy Ticket",
       ctaSecondary: "Plan Your Visit",
-      hoursLabel: "Opening Hours",
-      hoursValue: "[Tue–Sun 09:00–20:00]",
+      hoursLabel: "Hours",
+      hoursValue: "Tue–Sun 09:00–20:00",
       addressLabel: "Address",
-      addressValue: "[50/7 Dacia Blvd, Chișinău]",
-      priceLabel: "Ticket Price",
-      priceValue: "[from 5 MDL]"
+      addressValue: "50/7 Dacia Blvd, Chisinau",
+      priceLabel: "Tickets",
+      priceValue: "from 5 MDL"
     },
     quickInfo: {
-      sectionTitle: "Practical Information",
-      card1Title: "Quick QR Entry",
-      card1Text: "Purchase tickets online and bypass the queues at the turnstiles using our contactless scanners.",
-      card2Title: "Interactive Audio Guide",
-      card2Text: "Scan the QR code near any enclosure to instantly open the animal's profile and trigger the audio narration.",
-      card3Title: "Lush Botanical Garden",
-      card3Text: "Over 400 species of rare trees and flora maintain a natural microclimate tailored for our resident species.",
-      card4Title: "Family Comfort",
-      card4Text: "Generous rest spots, eco-friendly play areas, and nursing rooms are conveniently situated throughout the grounds."
+      sectionTitle: "Practical Before the Walk",
+      card1Title: "Tickets without friction",
+      card1Text: "Send a ticket request in advance and start from the main Zoo entrance without extra navigation.",
+      card2Title: "Map in your hand",
+      card2Text: "Open the Zoo plan to find animals, entrance, cafe, playground, and medical help.",
+      card3Title: "Hours and cues",
+      card3Text: "The park is open Tuesday through Sunday. Monday is a sanitary day.",
+      card4Title: "Family route",
+      card4Text: "Short stops, clear animal cards, and rest areas help families plan an easy walk."
     },
     mapSection: {
-      title: "Interactive Park Map",
-      subtitle: "Navigate the sanctuary using our custom map. Click any marker to view localized context about animals or infrastructure.",
+      title: "Interactive Zoo Map",
+      subtitle: "Use a calm internal plan: animals, entrance, cafe, playground, and medical help are one click away.",
       legendAnimal: "Animal",
-      legendEntry: "Entry / Exit",
-      legendCafe: "Cafe / Food",
-      legendKids: "Kids Area",
-      legendFirstAid: "First Aid",
-      clickMarkerTip: "Select a marker on the map to trigger the interactive informational mini-card.",
-      resetZoom: "Reset Scale",
-      viewInDetail: "View Details",
+      legendEntry: "Entry / exit",
+      legendCafe: "Cafe / food",
+      legendKids: "Playground",
+      legendFirstAid: "Medical help",
+      clickMarkerTip: "Choose a marker on the map to open a short practical card.",
+      resetZoom: "Reset zoom",
+      viewInDetail: "Open card",
       popupClose: "Close",
-      interactiveGuideTip: "Keep this interactive map active on your mobile device as you explore."
+      interactiveGuideTip: "The map is designed for phone use during your Zoo walk."
     },
     featuredAnimals: {
-      title: "Primal Encounters",
-      subtitle: "Encounter magnificent species in beautifully tailored biomes. Each card is an authentic editorial window into their wild lives.",
-      latNameLabel: "Latin Name",
-      biomeLabel: "Biome & Habitat",
-      ctaDetail: "View Details",
-      detailsTitle: "Animal Profile"
+      title: "Zoo Residents",
+      subtitle: "Rare and familiar species presented as editorial wildlife cards: image, biome, short fact, and quick QR profile access.",
+      latNameLabel: "Latin name",
+      biomeLabel: "Biome",
+      ctaDetail: "Open card",
+      detailsTitle: "Animal profile"
     },
     news: {
-      title: "Sanctuary Logs & Events",
-      subtitle: "Catch latest announcements, evening zoo lectures, and interactive wildlife workshops.",
-      readMore: "Read More",
+      title: "Events and Updates",
+      subtitle: "Short visitor updates: talks, family activities, and seasonal Zoo news.",
+      readMore: "Read more",
       items: [
         {
           date: "08 JULY 2026",
-          tag: "Lectures",
-          title: "Twilight Walks with Zoologists: Secrets of Night Predators",
-          desc: "A rare window into the nocturnal behaviors of our Siberian Tigers and Snow Leopards during dusk, their peak hour of activity."
+          tag: "Talk",
+          title: "Evening walk with a zoologist",
+          desc: "A short route about how large predators behave during calmer evening hours."
         },
         {
           date: "12 JULY 2026",
-          tag: "Sanctuary",
-          title: "Wild Cat Protection Day: Adventure Quests & Activities",
-          desc: "Interactive educational events spread throughout the botanical garden. Admission is entirely free for children under 12."
+          tag: "Families",
+          title: "Wild cats day",
+          desc: "Educational stations for children and parents near tiger, lynx, and leopard cards."
         },
         {
           date: "15 JULY 2026",
           tag: "Science",
-          title: "Amur Leopard Population Recovery Milestones",
-          desc: "Our veterinary and research teams published a comprehensive report documenting the stellar adaptation of younger leopards."
+          title: "How Zoo cares for rare species",
+          desc: "Zoologists explain diet, habitat, and calm animal observation."
         }
       ]
     },
     trust: {
-      title: "Pioneering Biodiversity",
-      subtitle: "We don't merely display wildlife; we actively preserve it.",
-      desc1: "Our sanctuary is engineered from the ground up to reconstruct organic ecosystems. We replaced metal bars with expansive, barrier-free habitats integrated with botanical zoning, rich landscape geology, and fresh watercourses.",
-      desc2: "All resident species receive fully customized dietary care, elite-tier veterinary attention, and respectful preservation. We take a leading role in global breeding and survival programs for endangered species.",
-      stat1Number: "45",
-      stat1Label: "hectares of rich nature reserve",
-      stat2Number: "120+",
-      stat2Label: "rare resident species",
-      stat3Number: "850k",
-      stat3Label: "annual visitors supported"
+      title: "A City Garden with Living Character",
+      subtitle: "Zoo is a walk, but also care for animals, plants, and visitors.",
+      desc1: "Routes, enclosures, and green zones are organized so visitors quickly understand where to go, what to see, and where to pause.",
+      desc2: "Animal cards, the map, and practical information support a calm visit without overloaded menus or extra screens.",
+      stat1Number: "09:00",
+      stat1Label: "opening Tuesday through Sunday",
+      stat2Number: "10+",
+      stat2Label: "animals in the Zoo catalog",
+      stat3Number: "3",
+      stat3Label: "interface languages"
     },
     faq: {
-      title: "Frequently Answered Questions",
-      subtitle: "Essential details to keep in mind prior to arriving at the gates.",
+      title: "Frequently Asked Questions",
+      subtitle: "Short answers about rules, tickets, accessibility, and visit planning.",
       items: [
         {
-          q: "Are visitors permitted to feed the animals?",
-          a: "Strictly forbidden. Each species receives a precise, nutritionally rich diet curated by our team of zoologists. Human snacks (such as bread, fries, or sweets) cause severe digestive distress and can prove fatal. Guided open feeding demonstrations are held daily under direct professional supervision."
+          q: "Can I feed the animals myself?",
+          a: "No. Each animal has a specialist diet. Visitor food can damage animal health."
         },
         {
-          q: "How do online electronic tickets work?",
-          a: "Each online ticket is embedded with a unique QR code. There is no requirement to print it — simply display the PDF barcode on your smartphone at the main entrance scanner. Tickets are fully valid for the entire duration of the selected calendar day."
+          q: "How do I use a phone ticket?",
+          a: "Show your electronic ticket or preliminary request at the entrance. The Zoo team will guide the next step."
         },
         {
-          q: "Is the sanctuary fully accessible for guests with limited mobility?",
-          a: "Absolutely. The entire park grounds are optimized for barrier-free movement. Pathways are sloped gently without abrupt steps, and elevated view platforms include safety ramps. Manual wheelchairs are available to rent free of charge at the main information counters."
+          q: "Is Zoo suitable for families with children?",
+          a: "Yes. The route includes short stops, a playground, a clear map, and animal cards that are easy to read on a phone."
         },
         {
-          q: "Where can I park and what are the fees?",
-          a: "Visitor parking is available near the main entrance. Current availability and fees should be confirmed with Zoo before arrival. Convenient spaces are planned close to the entrance for visitors with disabilities."
+          q: "Where is Zoo located?",
+          a: "Zoo is located in Chisinau at 50/7 Dacia Blvd. Check opening hours and sanitary days before your visit."
         }
       ]
     },
     footer: {
-      desc: "A progressive botanical and zoological sanctuary dedicated to protecting vulnerable wild species and cultivating a profound respect for our natural environment.",
+      desc: "Zoo is an urban botanical visitor guide in Chisinau: animals, map, practical information, and a calm route for the whole family.",
       colNavTitle: "Navigation",
       colContactTitle: "Contacts",
-      colSupportTitle: "Support Service",
-      supportText: "For visit questions, use the official Zoo emails or phone numbers listed here.",
+      colSupportTitle: "Support",
+      supportText: "For visit questions, use the official Zoo phones or emails.",
       copyright: "© 2026 Zoo.",
       allRightsReserved: "All rights reserved."
     },
     qrCard: {
       close: "Close",
-      warningTitle: "Safety Regulations",
-      feedingTimeTitle: "Feeding Demonstration",
-      rangeTitle: "Origin Habitat",
-      scannedTip: "Enclosure QR Code successfully scanned. Keep this card handy during your visit.",
-      tabAbout: "About Species",
-      tabHabitat: "Range & Feeding"
+      warningTitle: "Safety rules",
+      feedingTimeTitle: "Feeding",
+      rangeTitle: "Range",
+      scannedTip: "QR card opened. Keep it during your Zoo walk.",
+      tabAbout: "Description",
+      tabHabitat: "Range and feeding"
     }
   }
 };
+

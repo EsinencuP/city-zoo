@@ -41,7 +41,7 @@ export default function Hero({ lang, onOpenTickets, onNavigate }: HeroProps) {
             <motion.div variants={staggerItem}>
               <Badge className="bg-mint/80 shadow-[inset_0_0_0_1px_rgba(37,55,33,0.08)]">
                 <TreePine className="h-3.5 w-3.5" />
-                <span>Editorial wildlife guide</span>
+                <span>{lang === "ru" ? "Живой гид Zoo" : lang === "ro" ? "Ghid viu Zoo" : "Living Zoo guide"}</span>
               </Badge>
             </motion.div>
 
@@ -91,7 +91,7 @@ export default function Hero({ lang, onOpenTickets, onNavigate }: HeroProps) {
           <motion.div className="relative min-h-[390px] sm:min-h-[510px]" initial="hidden" animate="visible" variants={imageReveal}>
             <OrganicShape className="-right-6 top-5 -z-10 h-[82%] w-[92%] bg-mint shadow-botanical" />
             <div className="absolute left-0 top-10 z-10 max-w-[210px] rounded-[26px] bg-cream/88 p-4 shadow-soft-card backdrop-blur-md max-sm:hidden">
-              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-leaf">Biome note</span>
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-leaf">{lang === "ru" ? "Маршрут" : lang === "ro" ? "Traseu" : "Route note"}</span>
               <p className="mt-2 text-sm font-semibold leading-snug text-canopy">
                 {lang === "ru" ? "Маршрут начинается у главного входа Zoo." : lang === "ro" ? "Traseul începe la intrarea principală Zoo." : "Start the visit from Zoo main entrance."}
               </p>
@@ -105,9 +105,9 @@ export default function Hero({ lang, onOpenTickets, onNavigate }: HeroProps) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-canopy/82 via-canopy/12 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-cream">
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-cream/72">Featured resident</span>
-                <h4 className="mt-1 font-serif text-3xl font-semibold tracking-[-0.03em]">Amur Tiger</h4>
-                <p className="mt-1 font-mono text-xs text-mint">Panthera tigris altaica / Area A</p>
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-cream/72">{lang === "ru" ? "Житель Zoo" : lang === "ro" ? "Locuitor Zoo" : "Zoo resident"}</span>
+                <h4 className="mt-1 font-serif text-3xl font-semibold tracking-[-0.03em]">{lang === "ru" ? "Амурский тигр" : lang === "ro" ? "Tigrul Siberian" : "Amur Tiger"}</h4>
+                <p className="mt-1 font-mono text-xs text-mint">Panthera tigris altaica / {lang === "ru" ? "зона A" : lang === "ro" ? "zona A" : "Area A"}</p>
               </div>
             </div>
           </motion.div>
@@ -116,3 +116,4 @@ export default function Hero({ lang, onOpenTickets, onNavigate }: HeroProps) {
     </section>
   );
 }
+

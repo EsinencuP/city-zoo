@@ -56,7 +56,7 @@ export default function AnimalDetail({ animal, onBack, lang }: AnimalDetailProps
               <div className="absolute inset-0 bg-gradient-to-t from-canopy/82 via-canopy/10 to-transparent" />
               <div className="absolute left-5 top-5 flex items-center gap-2 rounded-full bg-canopy px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-cream shadow-soft-card">
                 <QrCode className="h-4 w-4 text-terracotta" />
-                <span>QR active</span>
+                <span>{lang === "ru" ? "QR открыт" : lang === "ro" ? "QR deschis" : "QR open"}</span>
               </div>
               <div className="absolute bottom-6 left-6 right-6 text-cream">
                 <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-cream/70">{animal.latinName}</span>
@@ -131,3 +131,4 @@ export default function AnimalDetail({ animal, onBack, lang }: AnimalDetailProps
     </main>
   );
 }
+

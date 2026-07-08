@@ -1,274 +1,246 @@
-import React, { useState, useRef } from "react";
-import { 
-  Compass, ZoomIn, ZoomOut, RotateCcw, 
-  MapPin, Coffee, Users, Cross, Eye, HelpCircle, Footprints, ShieldAlert 
-} from "lucide-react";
+﻿import React, { useRef, useState } from "react";
+import { motion } from "motion/react";
+import { ArrowRight, Coffee, Compass, Cross, Footprints, HelpCircle, RotateCcw, ShieldAlert, Users, ZoomIn, ZoomOut } from "lucide-react";
 import { translations } from "../data/translations";
 import { animals, Animal } from "../data/animals";
+import { animalImages } from "../data/animalImages";
+import { popupMotion } from "../lib/motion";
+import Button from "./ui/Button";
 
 interface MapSectionProps {
   lang: "ru" | "ro" | "en";
   onSelectAnimal: (animal: Animal) => void;
 }
 
+type MarkerType = "animal" | "entrance_exit" | "food" | "playground" | "medical_help";
+
 interface MapMarker {
   id: string;
-  type: "animal" | "entry" | "cafe" | "kids" | "first_aid";
+  type: MarkerType;
   name: { ru: string; ro: string; en: string };
-  coordinates: { x: number; y: number }; // percentage coords
-  refId?: string; // links to animal dataset if type === 'animal'
+  description?: { ru: string; ro: string; en: string };
+  coordinates: { x: number; y: number };
+  refId?: string;
+}
+
+const infrastructureMarkers: MapMarker[] = [
+  {
+    id: "main_entrance",
+    type: "entrance_exit",
+    name: { ru: "Главный вход Zoo", ro: "Intrarea principală Zoo", en: "Zoo Main Entrance" },
+    description: {
+      ru: "Кассы, входная зона и старт прогулочного маршрута по Zoo.",
+      ro: "Casele, zona de intrare și începutul traseului de vizită Zoo.",
+      en: "Ticket desks, entry area, and the start of the Zoo visitor route."
+    },
+    coordinates: { x: 50, y: 90 }
+  },
+  {
+    id: "garden_cafe",
+    type: "food",
+    name: { ru: "Садовое кафе", ro: "Cafenea de grădină", en: "Garden Cafe" },
+    description: {
+      ru: "Спокойная остановка для напитков, выпечки и короткого семейного отдыха.",
+      ro: "O oprire calmă pentru băuturi, patiserie și pauză de familie.",
+      en: "A calm stop for drinks, pastries, and a short family break."
+    },
+    coordinates: { x: 30, y: 20 }
+  },
+  {
+    id: "kids_playground",
+    type: "playground",
+    name: { ru: "Детская площадка", ro: "Teren de joacă", en: "Playground" },
+    description: {
+      ru: "Игровая зона для паузы между вольерами. Рекомендуется для семей с детьми.",
+      ro: "Zonă de joacă pentru pauză între incinte. Recomandată familiilor cu copii.",
+      en: "Play area for a break between enclosures. Recommended for families with children."
+    },
+    coordinates: { x: 68, y: 48 }
+  },
+  {
+    id: "medical_help",
+    type: "medical_help",
+    name: { ru: "Медпункт", ro: "Punct medical", en: "Medical Help" },
+    description: {
+      ru: "Обратитесь сюда при недомогании, травме или если нужна помощь сотрудника Zoo.",
+      ro: "Adresați-vă aici în caz de disconfort, accidentare sau dacă aveți nevoie de ajutorul echipei Zoo.",
+      en: "Use this point for illness, injury, or help from the Zoo team."
+    },
+    coordinates: { x: 58, y: 84 }
+  }
+];
+
+const typeLabel = (type: MarkerType, t: ReturnType<typeof getMapTranslations>) => {
+  switch (type) {
+    case "animal":
+      return t.legendAnimal;
+    case "entrance_exit":
+      return t.legendEntry;
+    case "food":
+      return t.legendCafe;
+    case "playground":
+      return t.legendKids;
+    case "medical_help":
+      return t.legendFirstAid;
+  }
+};
+
+function getMapTranslations(lang: "ru" | "ro" | "en") {
+  return translations[lang].mapSection;
 }
 
 export default function MapSection({ lang, onSelectAnimal }: MapSectionProps) {
-  const t = translations[lang].mapSection;
+  const t = getMapTranslations(lang);
   const tFeatured = translations[lang].featuredAnimals;
-
-  // State for interactive map controls
-  const [zoom, setZoom] = useState<number>(1);
-  const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
   const [activeMarker, setActiveMarker] = useState<MapMarker | null>(null);
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef<boolean>(false);
-  const dragStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const isDragging = useRef(false);
+  const dragStart = useRef({ x: 0, y: 0 });
 
-  // Infrastructure markers + Animal markers compiled
   const markers: MapMarker[] = [
-    // Entrance / Exit
-    {
-      id: "entry_exit",
-      type: "entry",
-      name: {
-        ru: "Главный вход и кассы",
-        ro: "Intrarea Principală și Case",
-        en: "Main Entrance & Ticket Office"
-      },
-      coordinates: { x: 50, y: 90 }
-    },
-    // Cafe
-    {
-      id: "botanical_cafe",
-      type: "cafe",
-      name: {
-        ru: "Эко-кафе «Листья»",
-        ro: "Eco-Cafenea „Frunze”",
-        en: "Leaves Eco-Cafe"
-      },
-      coordinates: { x: 30, y: 20 }
-    },
-    // Kids Zone
-    {
-      id: "kids_playground",
-      type: "kids",
-      name: {
-        ru: "Детская игровая эко-площадка",
-        ro: "Teren de joacă ecologic",
-        en: "Kids Eco-Playground"
-      },
-      coordinates: { x: 68, y: 48 }
-    },
-    // First Aid
-    {
-      id: "first_aid",
-      type: "first_aid",
-      name: {
-        ru: "Пункт первой помощи",
-        ro: "Punct Medical",
-        en: "First Aid & Info Desk"
-      },
-      coordinates: { x: 58, y: 84 }
-    },
-    // Animals markers (pulling from animals data coordinates)
-    ...animals.map((a) => ({
-      id: `marker_animal_${a.id}`,
+    ...infrastructureMarkers,
+    ...animals.map((animal) => ({
+      id: `animal_${animal.id}`,
       type: "animal" as const,
-      name: a.name,
-      coordinates: a.mapCoordinates,
-      refId: a.id
+      name: animal.name,
+      coordinates: animal.mapCoordinates,
+      refId: animal.id
     }))
   ];
 
-  // Zoom controls
-  const handleZoomIn = () => setZoom((prev) => Math.min(prev + 0.25, 2.5));
-  const handleZoomOut = () => setZoom((prev) => Math.max(prev - 0.25, 0.75));
+  const handleZoomIn = () => setZoom((prev) => Math.min(prev + 0.2, 2.2));
+  const handleZoomOut = () => setZoom((prev) => Math.max(prev - 0.2, 0.8));
   const handleReset = () => {
     setZoom(1);
     setPan({ x: 0, y: 0 });
     setActiveMarker(null);
   };
 
-  // Drag to pan logic for custom SVG map
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = (event: React.MouseEvent) => {
     isDragging.current = true;
-    dragStart.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };
+    dragStart.current = { x: event.clientX - pan.x, y: event.clientY - pan.y };
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMouseMove = (event: React.MouseEvent) => {
     if (!isDragging.current) return;
-    const dx = e.clientX - dragStart.current.x;
-    const dy = e.clientY - dragStart.current.y;
-    // Bound the panning boundaries relative to zoom
-    const bound = 150 * zoom;
+    const bound = 120 * zoom;
+    const nextX = event.clientX - dragStart.current.x;
+    const nextY = event.clientY - dragStart.current.y;
     setPan({
-      x: Math.max(-bound, Math.min(bound, dx)),
-      y: Math.max(-bound, Math.min(bound, dy))
+      x: Math.max(-bound, Math.min(bound, nextX)),
+      y: Math.max(-bound, Math.min(bound, nextY))
     });
   };
 
-  const handleMouseUp = () => {
+  const stopDragging = () => {
     isDragging.current = false;
   };
 
-  // Click on a marker
-  const handleMarkerClick = (marker: MapMarker, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setActiveMarker(marker);
-  };
-
-  // Helper to render beautiful category indicator icon
-  const getMarkerIcon = (type: MapMarker["type"]) => {
+  const getMarkerIcon = (type: MarkerType) => {
     switch (type) {
-      case "entry":
-        return <Footprints className="w-4 h-4" />;
-      case "cafe":
-        return <Coffee className="w-4 h-4" />;
-      case "kids":
-        return <Users className="w-4 h-4" />;
-      case "first_aid":
-        return <Cross className="w-4 h-4 rotate-45 text-red-600" />;
+      case "entrance_exit":
+        return <Footprints className="h-4 w-4" />;
+      case "food":
+        return <Coffee className="h-4 w-4" />;
+      case "playground":
+        return <Users className="h-4 w-4" />;
+      case "medical_help":
+        return <Cross className="h-4 w-4 rotate-45" />;
       case "animal":
-      default:
-        return <Compass className="w-4 h-4 text-[#D77A4A]" />;
+        return <Compass className="h-4 w-4" />;
     }
   };
 
-  // Render styling for categories
-  const getMarkerStyles = (type: MapMarker["type"], isSelected: boolean) => {
-    const base = "map-marker absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full transition-[transform,box-shadow,background-color] duration-200 shadow-md cursor-pointer select-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-terracotta/25";
-    const size = isSelected ? "w-10 h-10 ring-4 ring-terracotta z-30 scale-110 is-active" : "w-8 h-8 hover:scale-110 z-20 hover:z-25";
+  const getMarkerStyles = (type: MarkerType, isSelected: boolean) => {
+    const base = "map-marker absolute -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full shadow-md transition-[transform,box-shadow,background-color] duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-terracotta/25";
+    const size = isSelected ? "z-30 h-10 w-10 scale-110 ring-4 ring-terracotta is-active" : "z-20 h-8 w-8 hover:z-30 hover:scale-110";
+    const tone = {
+      animal: "border border-leaf/30 bg-mint text-leaf",
+      entrance_exit: "bg-canopy text-cream",
+      food: "bg-leaf text-cream",
+      playground: "bg-terracotta text-cream",
+      medical_help: "border border-terracotta/20 bg-cream text-terracotta"
+    }[type];
 
-    let colorClass = "";
-    switch (type) {
-      case "entry":
-        colorClass = "bg-[#233122] text-[#F6F1E8]";
-        break;
-      case "cafe":
-        colorClass = "bg-[#6F8F5B] text-[#F6F1E8]";
-        break;
-      case "kids":
-        colorClass = "bg-[#D77A4A] text-[#F6F1E8]";
-        break;
-      case "first_aid":
-        colorClass = "bg-white text-red-600 border border-red-100";
-        break;
-      case "animal":
-      default:
-        colorClass = "bg-[#E7F0E1] text-[#4F6942] border border-[#6F8F5B]/30";
-        break;
-    }
-
-    return `${base} ${size} ${colorClass}`;
+    return `${base} ${size} ${tone}`;
   };
+
+  const activeAnimal = activeMarker?.type === "animal" ? animals.find((animal) => animal.id === activeMarker.refId) : null;
 
   return (
-    <section id="map" className="py-20 bg-[#F6F1E8] border-b border-[#233122]/10 overflow-hidden">
-      <div className="max-w-[1200px] mx-auto px-4 md:px-6">
-        
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+    <section id="map" className="relative overflow-hidden border-b border-canopy/10 bg-cream py-16 md:py-24">
+      <div className="absolute inset-0 botanical-map-grid opacity-45" />
+      <div className="relative z-10 mx-auto max-w-[1200px] px-4 md:px-6">
+        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <span className="font-mono text-xs text-[#6F8F5B] uppercase tracking-wider block mb-2">Interactive Guide</span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#233122] font-semibold tracking-tight text-balance">
+            <span className="mb-3 block font-mono text-xs font-semibold uppercase tracking-[0.22em] text-leaf">Interactive guide</span>
+            <h2 className="font-serif text-3xl font-semibold leading-[1.05] tracking-[-0.035em] text-canopy text-balance sm:text-4xl md:text-5xl">
               {t.title}
             </h2>
-            <p className="text-sm sm:text-base text-[#5E6B5C] mt-2 text-pretty">
-              {t.subtitle}
-            </p>
+            <p className="mt-4 text-sm leading-7 text-moss text-pretty sm:text-base">{t.subtitle}</p>
           </div>
-
-          {/* Quick tip badge */}
-          <div className="inline-flex items-center gap-2 bg-[#E7F0E1] border border-[#6F8F5B]/15 px-4 py-2.5 rounded-full text-xs font-semibold text-[#4F6942] self-start md:self-auto shadow-sm">
-            <ShieldAlert className="w-4 h-4 text-[#D77A4A]" />
+          <div className="inline-flex max-w-md items-center gap-2 rounded-full bg-mint px-4 py-2.5 text-xs font-semibold text-canopy shadow-soft-card">
+            <ShieldAlert className="h-4 w-4 shrink-0 text-terracotta" />
             <span>{t.interactiveGuideTip}</span>
           </div>
         </div>
 
-        {/* Map Control Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* THE INTERACTIVE MAP CANVAS CONTAINER - 8 cols on desktop */}
-          <div className="lg:col-span-8 flex flex-col gap-4">
-            
-            {/* Map Canvas Card */}
-            <div 
-              ref={mapContainerRef}
-              className="relative w-full aspect-[4/3] sm:aspect-[16/10] botanical-map-grid bg-mint border border-canopy/10 rounded-[36px] overflow-hidden cursor-grab active:cursor-grabbing select-none shadow-[inset_0_2px_10px_rgba(35,49,34,0.05)]"
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-8">
+            <div
+              className="relative aspect-[4/3] w-full select-none overflow-hidden rounded-[36px] border border-canopy/10 bg-mint shadow-[inset_0_2px_10px_rgba(35,49,34,0.05)] sm:aspect-[16/10]"
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
+              onMouseUp={stopDragging}
+              onMouseLeave={stopDragging}
               id="interactive-svg-map-wrapper"
             >
-              
-              {/* Actual Map Drawing */}
-              <div 
-                className="w-full h-full relative origin-center transition-transform duration-100 ease-out"
-                style={{
-                  transform: `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`,
-                }}
+              <div
+                className="relative h-full w-full origin-center transition-transform duration-100 ease-out"
+                style={{ transform: `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)` }}
               >
-                {/* SVG Botanical Park Layout Map */}
-                <svg viewBox="0 0 800 500" className="w-full h-full object-cover select-none pointer-events-none">
-                  {/* Lakes & Waterways */}
-                  <path d="M50 150 C200 120, 250 180, 420 150 C580 120, 680 160, 750 140 L800 200 L800 0 L0 0 Z" fill="#C4D0D9" opacity="0.6" />
-                  <circle cx="200" cy="250" r="45" fill="#C4D0D9" opacity="0.8" />
-                  <circle cx="580" cy="380" r="60" fill="#C4D0D9" opacity="0.8" />
-                  
-                  {/* Rivers linking lakes */}
-                  <path d="M200 250 Q390 315 580 380" stroke="#C4D0D9" strokeWidth="24" fill="none" strokeLinecap="round" opacity="0.7" />
-
-                  {/* Botanical Green Zones & Forests */}
-                  <rect x="0" y="0" width="800" height="500" fill="none" />
-                  {/* Large Forest Habitats */}
-                  <path d="M 0,200 C 150,150 250,220 300,350 C 350,480 200,500 0,500 Z" fill="#6F8F5B" opacity="0.15" />
-                  <path d="M 500,200 C 650,150 750,220 800,350 L 800,500 L 400,500 C 450,400 450,300 500,200 Z" fill="#6F8F5B" opacity="0.2" />
-                  
-                  {/* Main Walkways & Paths */}
-                  <path d="M400,500 L400,400 C400,350 480,260 480,220 C480,180 400,100 400,80" stroke="#F6F1E8" strokeWidth="12" fill="none" strokeLinecap="round" opacity="0.9" />
-                  {/* Ring walkway */}
-                  <path d="M400,350 C250,350 120,280 120,200 C120,120 250,80 400,80 C550,80 680,120 680,200 C680,280 550,350 400,350 Z" stroke="#F6F1E8" strokeWidth="10" fill="none" opacity="0.9" />
-                  {/* Secondary walkway */}
-                  <path d="M120,200 L250,300 C300,320 500,320 550,300 L680,200" stroke="#F6F1E8" strokeWidth="8" fill="none" opacity="0.6" strokeDasharray="5,5" />
-
-                  {/* Enclosure boundary lines (botanical editorial style) */}
-                  <rect x="50" y="80" width="120" height="80" rx="15" fill="none" stroke="#233122" strokeWidth="2" strokeDasharray="4,4" opacity="0.2" />
-                  <rect x="230" y="50" width="100" height="70" rx="15" fill="none" stroke="#233122" strokeWidth="2" strokeDasharray="4,4" opacity="0.2" />
-                  <rect x="630" y="80" width="120" height="80" rx="15" fill="none" stroke="#233122" strokeWidth="2" strokeDasharray="4,4" opacity="0.2" />
-                  <circle cx="200" cy="250" r="55" fill="none" stroke="#233122" strokeWidth="2" strokeDasharray="4,4" opacity="0.2" />
-                  <circle cx="580" cy="380" r="75" fill="none" stroke="#233122" strokeWidth="2" strokeDasharray="4,4" opacity="0.2" />
-                  
-                  {/* Direction Compass graphic */}
-                  <g transform="translate(60, 430) scale(0.7)" opacity="0.4">
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#233122" strokeWidth="2" />
-                    <line x1="50" y1="10" x2="50" y2="90" stroke="#233122" strokeWidth="2" />
-                    <line x1="10" y1="50" x2="90" y2="50" stroke="#233122" strokeWidth="2" />
-                    <polygon points="50,15 45,50 50,45" fill="#D77A4A" />
-                    <polygon points="50,85 45,50 50,45" fill="#233122" />
-                    <text x="45" y="8" font-family="monospace" font-size="10" fill="#233122" font-weight="bold">N</text>
+                <svg viewBox="0 0 800 500" className="pointer-events-none h-full w-full object-cover select-none" aria-hidden="true">
+                  <rect width="800" height="500" fill="#e4f0dd" />
+                  <path d="M50 150 C200 120, 250 180, 420 150 C580 120, 680 160, 750 140 L800 200 L800 0 L0 0 Z" fill="#cfe1df" opacity="0.9" />
+                  <circle cx="200" cy="250" r="45" fill="#cfe1df" opacity="0.95" />
+                  <circle cx="580" cy="380" r="60" fill="#cfe1df" opacity="0.95" />
+                  <path d="M200 250 Q390 315 580 380" stroke="#cfe1df" strokeWidth="24" fill="none" strokeLinecap="round" opacity="0.9" />
+                  <path d="M 0,200 C 150,150 250,220 300,350 C 350,480 200,500 0,500 Z" fill="#789c61" opacity="0.18" />
+                  <path d="M 500,200 C 650,150 750,220 800,350 L 800,500 L 400,500 C 450,400 450,300 500,200 Z" fill="#789c61" opacity="0.22" />
+                  <path d="M400,500 L400,400 C400,350 480,260 480,220 C480,180 400,100 400,80" stroke="#fbf4e8" strokeWidth="12" fill="none" strokeLinecap="round" opacity="0.95" />
+                  <path d="M400,350 C250,350 120,280 120,200 C120,120 250,80 400,80 C550,80 680,120 680,200 C680,280 550,350 400,350 Z" stroke="#fbf4e8" strokeWidth="10" fill="none" opacity="0.95" />
+                  <path d="M120,200 L250,300 C300,320 500,320 550,300 L680,200" stroke="#fbf4e8" strokeWidth="8" fill="none" opacity="0.62" strokeDasharray="5,5" />
+                  <rect x="50" y="80" width="120" height="80" rx="15" fill="none" stroke="#253721" strokeWidth="2" strokeDasharray="4,4" opacity="0.2" />
+                  <rect x="230" y="50" width="100" height="70" rx="15" fill="none" stroke="#253721" strokeWidth="2" strokeDasharray="4,4" opacity="0.2" />
+                  <rect x="630" y="80" width="120" height="80" rx="15" fill="none" stroke="#253721" strokeWidth="2" strokeDasharray="4,4" opacity="0.2" />
+                  <circle cx="200" cy="250" r="55" fill="none" stroke="#253721" strokeWidth="2" strokeDasharray="4,4" opacity="0.18" />
+                  <circle cx="580" cy="380" r="75" fill="none" stroke="#253721" strokeWidth="2" strokeDasharray="4,4" opacity="0.18" />
+                  <g transform="translate(60, 430) scale(0.7)" opacity="0.42">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#253721" strokeWidth="2" />
+                    <line x1="50" y1="10" x2="50" y2="90" stroke="#253721" strokeWidth="2" />
+                    <line x1="10" y1="50" x2="90" y2="50" stroke="#253721" strokeWidth="2" />
+                    <polygon points="50,15 45,50 50,45" fill="#d87949" />
+                    <polygon points="50,85 45,50 50,45" fill="#253721" />
+                    <text x="45" y="8" fontFamily="monospace" fontSize="10" fill="#253721" fontWeight="bold">N</text>
                   </g>
                 </svg>
 
-                {/* Markers Placed Over the Layout */}
                 {markers.map((marker) => {
                   const isSelected = activeMarker?.id === marker.id;
+                  const label = `${typeLabel(marker.type, t)}: ${marker.name[lang]}`;
                   return (
                     <button
                       key={marker.id}
-                      onClick={(e) => handleMarkerClick(marker, e)}
-                      style={{
-                        left: `${marker.coordinates.x}%`,
-                        top: `${marker.coordinates.y}%`
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setActiveMarker(marker);
                       }}
+                      style={{ left: `${marker.coordinates.x}%`, top: `${marker.coordinates.y}%` }}
                       className={getMarkerStyles(marker.type, isSelected)}
+                      aria-label={label}
+                      title={label}
                       id={`map-marker-btn-${marker.id}`}
                     >
                       {getMarkerIcon(marker.type)}
@@ -277,153 +249,91 @@ export default function MapSection({ lang, onSelectAnimal }: MapSectionProps) {
                 })}
               </div>
 
-              {/* FLOATING MAP ZOOM & PAN CONTROLS */}
-              <div className="absolute bottom-6 right-6 flex items-center gap-2 bg-[#F6F1E8]/90 backdrop-blur-md border border-[#233122]/10 p-1.5 rounded-full shadow-lg z-30">
-                <button
-                  onClick={handleZoomIn}
-                  className="w-10 h-10 rounded-full hover:bg-[#E7F0E1] text-[#233122] flex items-center justify-center transition-colors min-h-[40px] min-w-[40px]"
-                  title="Zoom In"
-                >
-                  <ZoomIn className="w-5 h-5" />
+              <div className="absolute bottom-5 right-5 z-30 flex items-center gap-1.5 rounded-full border border-canopy/10 bg-cream/90 p-1.5 shadow-soft-card backdrop-blur-md">
+                <button type="button" onClick={handleZoomIn} className="flex h-10 w-10 items-center justify-center rounded-full text-canopy transition-colors hover:bg-mint focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-leaf/20" aria-label="Zoom in">
+                  <ZoomIn className="h-5 w-5" />
                 </button>
-                <button
-                  onClick={handleZoomOut}
-                  className="w-10 h-10 rounded-full hover:bg-[#E7F0E1] text-[#233122] flex items-center justify-center transition-colors min-h-[40px] min-w-[40px]"
-                  title="Zoom Out"
-                >
-                  <ZoomOut className="w-5 h-5" />
+                <button type="button" onClick={handleZoomOut} className="flex h-10 w-10 items-center justify-center rounded-full text-canopy transition-colors hover:bg-mint focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-leaf/20" aria-label="Zoom out">
+                  <ZoomOut className="h-5 w-5" />
                 </button>
-                <button
-                  onClick={handleReset}
-                  className="w-10 h-10 rounded-full hover:bg-[#E7F0E1] text-[#233122] flex items-center justify-center transition-colors min-h-[40px] min-w-[40px]"
-                  title="Reset Map View"
-                >
-                  <RotateCcw className="w-5 h-5" />
+                <button type="button" onClick={handleReset} className="flex h-10 w-10 items-center justify-center rounded-full text-canopy transition-colors hover:bg-mint focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-leaf/20" aria-label={t.resetZoom} title={t.resetZoom}>
+                  <RotateCcw className="h-5 w-5" />
                 </button>
               </div>
 
-              {/* FLOATING LEGEND ON DESKTOP */}
-              <div className="hidden sm:flex absolute top-6 left-6 flex-wrap gap-2.5 max-w-[400px] bg-[#F6F1E8]/90 backdrop-blur-md border border-[#233122]/10 p-2.5 rounded-2xl shadow-md z-30 font-mono text-[10px]">
-                <div className="flex items-center gap-1 bg-[#E7F0E1] text-[#4F6942] border border-[#6F8F5B]/20 px-2 py-1 rounded-md">
-                  <div className="w-2 h-2 rounded-full bg-[#D77A4A]" />
-                  <span>{t.legendAnimal}</span>
-                </div>
-                <div className="flex items-center gap-1 bg-[#233122] text-[#F6F1E8] px-2 py-1 rounded-md">
-                  <div className="w-2 h-2 rounded-full bg-[#F6F1E8]" />
-                  <span>{t.legendEntry}</span>
-                </div>
-                <div className="flex items-center gap-1 bg-[#6F8F5B] text-[#F6F1E8] px-2 py-1 rounded-md">
-                  <div className="w-2 h-2 rounded-full bg-white" />
-                  <span>{t.legendCafe}</span>
-                </div>
-                <div className="flex items-center gap-1 bg-[#D77A4A] text-[#F6F1E8] px-2 py-1 rounded-md">
-                  <div className="w-2 h-2 rounded-full bg-white" />
-                  <span>{t.legendKids}</span>
-                </div>
+              <div className="absolute left-5 top-5 z-30 hidden max-w-[420px] flex-wrap gap-2 rounded-[22px] border border-canopy/10 bg-cream/90 p-2.5 font-mono text-[10px] shadow-soft-card backdrop-blur-md sm:flex">
+                {([
+                  ["animal", t.legendAnimal],
+                  ["entrance_exit", t.legendEntry],
+                  ["food", t.legendCafe],
+                  ["playground", t.legendKids],
+                  ["medical_help", t.legendFirstAid]
+                ] as Array<[MarkerType, string]>).map(([type, label]) => (
+                  <span key={type} className="inline-flex items-center gap-1.5 rounded-full bg-mint px-2.5 py-1 text-canopy">
+                    <span className={[
+                      "h-2 w-2 rounded-full",
+                      type === "animal" ? "bg-terracotta" : type === "entrance_exit" ? "bg-canopy" : type === "food" ? "bg-leaf" : type === "playground" ? "bg-terracotta" : "bg-cream ring-1 ring-terracotta"
+                    ].join(" ")} />
+                    {label}
+                  </span>
+                ))}
               </div>
-
             </div>
           </div>
 
-          {/* ACTIVE MARKER SIDE DETAILS PANEL (MAP POPUP) - 4 cols on desktop */}
-          <div className="lg:col-span-4 h-full flex flex-col justify-between">
-            <div className="bg-cream/90 border border-canopy/10 rounded-[32px] p-6 shadow-soft-card min-h-[280px] lg:min-h-[380px] flex flex-col justify-between backdrop-blur-sm">
-              
+          <aside className="lg:col-span-4">
+            <div className="min-h-[320px] rounded-[34px] border border-canopy/10 bg-cream/92 p-6 shadow-soft-card backdrop-blur-md lg:min-h-[430px]">
               {activeMarker ? (
-                <div className="popup-motion flex flex-col gap-4">
-                  {/* Category Type Badge */}
-                  <span className="font-mono text-xs text-[#6F8F5B] uppercase tracking-wider block">
-                    {activeMarker.type === "animal" ? t.legendAnimal : activeMarker.type}
-                  </span>
+                <motion.div key={activeMarker.id} initial="hidden" animate="visible" variants={popupMotion} className="flex h-full flex-col gap-5">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-leaf">{typeLabel(activeMarker.type, t)}</span>
+                    <button type="button" onClick={() => setActiveMarker(null)} className="rounded-full px-3 py-1.5 text-xs font-bold text-moss transition-colors hover:bg-mint hover:text-canopy focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-leaf/20">
+                      {t.popupClose}
+                    </button>
+                  </div>
 
-                  {/* Marker Title */}
-                  <h3 className="font-serif text-2xl font-bold text-[#233122] leading-tight">
-                    {activeMarker.name[lang]}
-                  </h3>
-
-                  {activeMarker.type === "animal" ? (
-                    (() => {
-                      const animalData = animals.find((a) => a.id === activeMarker.refId);
-                      if (!animalData) return null;
-                      return (
-                        <div className="flex flex-col gap-4">
-                          {/* Latin name */}
-                          <p className="font-mono text-xs text-[#5E6B5C] italic">
-                            {animalData.latinName}
-                          </p>
-                          {/* Biome */}
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs font-semibold uppercase">{tFeatured.biomeLabel}:</span>
-                            <span className={`text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${animalData.biomeColor}`}>
-                              {animalData.biome[lang]}
-                            </span>
-                          </div>
-                          {/* Short description / fact */}
-                          <p className="text-sm text-[#233122] leading-relaxed">
-                            {animalData.shortFact[lang]}
-                          </p>
-
-                          {/* CTA to open detailed profile */}
-                          <button
-                            onClick={() => onSelectAnimal(animalData)}
-                            className="mt-4 bg-terracotta hover:bg-terracotta-deep text-cream px-6 py-3 rounded-[16px] font-semibold text-sm transition-all duration-200 active:scale-[0.96] flex items-center justify-center gap-2 shadow-md hover:scale-[0.98] min-h-[44px]"
-                            id={`map-popup-detail-cta-${animalData.id}`}
-                          >
-                            <Eye className="w-4 h-4" />
-                            <span>{t.viewInDetail}</span>
-                          </button>
-                        </div>
-                      );
-                    })()
+                  {activeAnimal ? (
+                    <>
+                      <div className="overflow-hidden rounded-[26px] bg-mint">
+                        <img src={animalImages[activeAnimal.id] || animalImages.tiger} alt={activeAnimal.name[lang]} className="h-44 w-full object-cover" loading="lazy" />
+                      </div>
+                      <div>
+                        <h3 className="font-serif text-3xl font-semibold leading-[1.05] tracking-[-0.035em] text-canopy text-balance">{activeAnimal.name[lang]}</h3>
+                        <p className="mt-2 font-mono text-xs italic text-leaf">{activeAnimal.latinName}</p>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] ${activeAnimal.biomeColor}`}>{activeAnimal.biome[lang]}</span>
+                        <span className="rounded-full bg-mint px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-canopy">{tFeatured.biomeLabel}</span>
+                      </div>
+                      <p className="text-sm leading-6 text-moss text-pretty">{activeAnimal.shortFact[lang]}</p>
+                      <Button onClick={() => onSelectAnimal(activeAnimal)} className="mt-auto w-full justify-center rounded-[20px]" id={`map-popup-detail-cta-${activeAnimal.id}`}>
+                        <span>{t.viewInDetail}</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </>
                   ) : (
-                    <div className="flex flex-col gap-3">
-                      <p className="text-sm text-[#5E6B5C] leading-relaxed">
-                        {activeMarker.type === "entry" && (
-                          lang === "ru" ? "Главный пропускной узел парка. Оборудован бесконтактными сканерами QR-кодов для мгновенного входа." :
-                          lang === "ro" ? "Punctul principal de acces. Echipat cu scanere QR contactless pentru intrare instantanee." :
-                          "Main access checkpoint. Equipped with contactless QR scanners for instant, line-free entry."
-                        )}
-                        {activeMarker.type === "cafe" && (
-                          lang === "ru" ? "Уютное кафе среди зелени. Натуральные фермерские продукты, чай из дикорастущих трав и свежая выпечка." :
-                          lang === "ro" ? "Cafenea primitoare înconjurată de verdeață. Produse bio de fermă, ceai din ierburi sălbatice și patiserie caldă." :
-                          "Cosy cafe surrounded by rich vegetation. Featuring natural farm food, herbal teas, and hot pastry."
-                        )}
-                        {activeMarker.type === "kids" && (
-                          lang === "ru" ? "Безопасная детская эко-площадка, построенная полностью из натурального дерева и каната для активного отдыха." :
-                          lang === "ro" ? "Teren de joacă ecologic, sigur, construit în întregime din lemn natural și frânghii." :
-                          "Safe eco-playground constructed completely of organic wood and hemp ropes for physical recreation."
-                        )}
-                        {activeMarker.type === "first_aid" && (
-                          lang === "ru" ? "Круглосуточный пункт оказания первой медицинской помощи, а также центральная стойка информации." :
-                          lang === "ro" ? "Punct medical non-stop de prim ajutor și biroul central de informații pentru vizitatori." :
-                          "First aid medical station and centralized visitor information desk, active during park hours."
-                        )}
-                      </p>
-                      <button
-                        onClick={() => setActiveMarker(null)}
-                        className="mt-6 border border-[#233122]/15 hover:bg-[#F6F1E8]/40 text-[#233122] px-5 py-2.5 rounded-[12px] font-semibold text-xs transition-all duration-200 min-h-[40px]"
-                        id="map-popup-close-infrastructure-btn"
-                      >
-                        {t.popupClose}
-                      </button>
-                    </div>
+                    <>
+                      <div>
+                        <h3 className="font-serif text-3xl font-semibold leading-[1.05] tracking-[-0.035em] text-canopy text-balance">{activeMarker.name[lang]}</h3>
+                        <p className="mt-4 text-sm leading-7 text-moss text-pretty">{activeMarker.description?.[lang]}</p>
+                      </div>
+                      <div className="mt-auto rounded-[26px] bg-mint p-5">
+                        <p className="font-mono text-[11px] font-semibold uppercase leading-5 tracking-[0.14em] text-canopy/70">
+                          {lang === "ru" ? "Инфраструктура отмечена для быстрой ориентации внутри Zoo." : lang === "ro" ? "Infrastructura este marcată pentru orientare rapidă în Zoo." : "Infrastructure markers are here for quick wayfinding inside Zoo."}
+                        </p>
+                      </div>
+                    </>
                   )}
-
-                </div>
+                </motion.div>
               ) : (
-                <div className="h-full flex flex-col items-center justify-center text-center gap-4 py-8 text-[#5E6B5C]">
-                  <HelpCircle className="w-12 h-12 text-[#6F8F5B] opacity-50" />
-                  <p className="text-sm max-w-[200px] leading-relaxed text-balance">
-                    {t.clickMarkerTip}
-                  </p>
+                <div className="flex min-h-[270px] flex-col items-center justify-center gap-4 text-center text-moss lg:min-h-[380px]">
+                  <HelpCircle className="h-12 w-12 text-leaf/50" />
+                  <p className="max-w-[230px] text-sm leading-6 text-balance">{t.clickMarkerTip}</p>
                 </div>
               )}
-
             </div>
-          </div>
-
+          </aside>
         </div>
-
       </div>
     </section>
   );

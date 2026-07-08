@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { X, Ticket, Minus, Plus, Check, QrCode } from "lucide-react";
 
 interface TicketModalProps {
@@ -26,41 +26,41 @@ export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps)
   const labels = {
     ru: {
       title: "Билеты в Zoo",
-      subtitle: "Демо-версия показывает выбор тарифов и QR-вход без реальной оплаты.",
+      subtitle: "Выберите тарифы для посещения. Заявка формируется как предварительный QR-вход для визита.",
       adult: "Взрослый билет",
       child: "Детский билет до 12 лет",
       senior: "Льготный билет",
       total: "Итого",
-      successTitle: "Демо-заявка готова",
-      successSubtitle: "В рабочей версии здесь будет реальный билет с QR-кодом. Для демонстрации сценарий завершён без оплаты и отправки email.",
+      successTitle: "Предварительная заявка готова",
+      successSubtitle: "Предварительная заявка сформирована. Покажите её на входе или уточните подтверждение у команды Zoo.",
       close: "Закрыть",
-      checkout: "Сформировать демо-заявку",
+      checkout: "Сформировать заявку",
       currency: "MDL"
     },
     ro: {
       title: "Bilete la Zoo",
-      subtitle: "Versiunea demo arată selectarea tarifelor și accesul QR fără plată reală.",
+      subtitle: "Alegeți tarifele pentru vizită. Cererea se formează ca acces QR preliminar pentru vizită.",
       adult: "Bilet adult",
       child: "Bilet copil până la 12 ani",
       senior: "Bilet redus",
       total: "Total",
-      successTitle: "Cererea demo este gata",
-      successSubtitle: "În versiunea completă aici va fi un bilet real cu cod QR. Pentru demo, scenariul se încheie fără plată și fără email.",
+      successTitle: "Cererea preliminară este gata",
+      successSubtitle: "Cererea preliminară este formată. Prezentați-o la intrare sau confirmați detaliile cu echipa Zoo.",
       close: "Închide",
-      checkout: "Generează cerere demo",
+      checkout: "Formează cererea",
       currency: "MDL"
     },
     en: {
       title: "Tickets to Zoo",
-      subtitle: "This demo shows ticket selection and QR entry without real payment processing.",
+      subtitle: "Choose visit tariffs. The request is prepared as a preliminary QR entry flow for the visit.",
       adult: "Adult ticket",
       child: "Child ticket under 12",
       senior: "Reduced ticket",
       total: "Total",
-      successTitle: "Demo request ready",
-      successSubtitle: "The full version will generate a real QR ticket here. In this demo, the flow ends without payment or email delivery.",
+      successTitle: "Preliminary request ready",
+      successSubtitle: "The preliminary request is ready. Show it at the entrance or confirm details with the Zoo team.",
       close: "Close",
-      checkout: "Create demo request",
+      checkout: "Create request",
       currency: "MDL"
     }
   }[lang];
@@ -78,7 +78,7 @@ export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps)
     quantities.child * prices.child +
     quantities.senior * prices.senior;
 
-  const handleCreateDemoRequest = () => {
+  const handleCreateRequest = () => {
     if (totalCost === 0) return;
     setStep("success");
   };
@@ -158,7 +158,7 @@ export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps)
             </div>
 
             <button
-              onClick={handleCreateDemoRequest}
+              onClick={handleCreateRequest}
               disabled={totalCost === 0}
               className={`w-full py-3.5 rounded-xl font-semibold text-sm transition-[scale,background-color] duration-200 flex items-center justify-center gap-2 shadow-md ${
                 totalCost > 0
@@ -193,3 +193,4 @@ export default function TicketModal({ isOpen, onClose, lang }: TicketModalProps)
     </div>
   );
 }
+

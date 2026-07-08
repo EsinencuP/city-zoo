@@ -11,28 +11,28 @@ export default function NotFoundPage({ lang, reason = "route", onNavigate }: Not
   const copy = {
     ru: {
       eyebrow: reason === "qr" ? "QR-код не найден" : "Страница не найдена",
-      title: reason === "qr" ? "Карточка по этому QR-коду недоступна" : "Такой страницы нет в демо",
+      title: reason === "qr" ? "Карточка по этому QR-коду недоступна" : "Эта страница пока не входит в публичную версию",
       text: reason === "qr"
-        ? "Проверьте код на табличке или откройте список животных. В демо доступны QR-ссылки вроде /qr/tiger и /qr/red_panda."
-        : "Текущая демо-версия показывает публичный сайт без админ-панели и служебных разделов.",
+        ? "Проверьте код на табличке или откройте список животных. Сейчас доступны QR-ссылки вроде /qr/tiger и /qr/red_panda."
+        : "Текущая публичная версия сфокусирована на маршруте посетителя: главная, животные, карта, новости, FAQ и планирование визита.",
       home: "На главную",
       animals: "К животным"
     },
     ro: {
       eyebrow: reason === "qr" ? "Cod QR negăsit" : "Pagina nu există",
-      title: reason === "qr" ? "Fișa pentru acest cod QR nu este disponibilă" : "Această pagină nu este în demo",
+      title: reason === "qr" ? "Fișa pentru acest cod QR nu este disponibilă" : "Această pagină nu face încă parte din versiunea publică",
       text: reason === "qr"
-        ? "Verificați codul de pe panou sau deschideți lista animalelor. În demo funcționează linkuri precum /qr/tiger și /qr/red_panda."
-        : "Versiunea demo afișează site-ul public, fără panou de administrare și secțiuni interne.",
+        ? "Verificați codul de pe panou sau deschideți lista animalelor. Acum sunt disponibile linkuri precum /qr/tiger și /qr/red_panda."
+        : "Versiunea publică actuală este concentrată pe traseul vizitatorului: pagina principală, animale, hartă, noutăți, FAQ și planificarea vizitei.",
       home: "Acasă",
       animals: "Animale"
     },
     en: {
       eyebrow: reason === "qr" ? "QR code not found" : "Page not found",
-      title: reason === "qr" ? "This QR animal card is unavailable" : "This page is not part of the demo",
+      title: reason === "qr" ? "This QR animal card is unavailable" : "This page is not included in the public version yet",
       text: reason === "qr"
-        ? "Check the sign code or open the animal directory. Demo QR links include /qr/tiger and /qr/red_panda."
-        : "The current demo shows the public visitor site without admin or internal service areas.",
+        ? "Check the sign code or open the animal directory. Current QR links include /qr/tiger and /qr/red_panda."
+        : "The current public version focuses on the visitor journey: home, animals, map, news, FAQ and visit planning.",
       home: "Home",
       animals: "Animals"
     }
@@ -73,3 +73,4 @@ export default function NotFoundPage({ lang, reason = "route", onNavigate }: Not
     </div>
   );
 }
+
